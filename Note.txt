@@ -1,0 +1,8 @@
+Chuyển sang FedProx vừa thay model/train mặc định type_fed = FedProx, model/centralize_training dùng tran(type_fed=Avg)
+client/fit  train dùng type_fed = FedProx
+
+Kết hợp tham số
+Ý tưởng 
+D client này quá lớớn so vs client khác  thì k tăng tuyến tính nữa, cho tăng theo hàm log thôi
+Dùng TB nhân thay vì tb cộng 
+Dùng metric f1 thay vì acc ?

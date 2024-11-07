@@ -1,0 +1,1324 @@
+[2024-11-05 16:59:48,137][flwr][INFO] - Starting Flower simulation, config: num_rounds=2, no round_timeout
+[2024-11-05 16:59:52,227][flwr][INFO] - Flower VCE: Ray initialized with resources: {'object_store_memory': 2464210944.0, 'memory': 4928421888.0, 'node:__internal_head__': 1.0, 'CPU': 12.0, 'node:172.16.1.72': 1.0}
+[2024-11-05 16:59:52,228][flwr][INFO] - Optimize your simulation with Flower VCE: https://flower.ai/docs/framework/how-to-run-simulations.html
+[2024-11-05 16:59:52,228][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 2, 'num_gpus': 0.0}
+[2024-11-05 16:59:52,244][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 6 actors
+[2024-11-05 16:59:52,245][flwr][INFO] - [INIT]
+[2024-11-05 16:59:52,245][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-05 16:59:55,317][flwr][INFO] - Received initial parameters from one random client
+[2024-11-05 16:59:55,317][flwr][INFO] - Starting evaluation of initial global parameters
+[2024-11-05 17:00:01,580][flwr][INFO] - initial parameters (loss, other metrics): 0.02227607283454675, {'accuracy': 0.36378205128205127}
+[2024-11-05 17:00:01,580][flwr][INFO] - 
+[2024-11-05 17:00:01,580][flwr][INFO] - [ROUND 1]
+[2024-11-05 17:00:01,581][flwr][INFO] - configure_fit: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:00:02,566][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:02,566][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:03,514][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:03,516][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:04,460][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:04,460][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:05,119][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:05,119][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:05,954][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:05,955][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:06,657][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:06,657][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:06,676][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:06,676][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:06,754][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:06,755][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:06,804][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:06,804][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:06,827][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:06,827][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:06,827][flwr][INFO] - aggregate_fit: received 0 results and 10 failures
+[2024-11-05 17:00:13,270][flwr][INFO] - fit progress: (1, 0.02227607283454675, {'accuracy': 0.36378205128205127}, 11.690247755999735)
+[2024-11-05 17:00:13,271][flwr][INFO] - configure_evaluate: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:00:14,097][flwr][INFO] - aggregate_evaluate: received 10 results and 0 failures
+[2024-11-05 17:00:14,097][root][INFO] - EVALUATE_METRICS_AGGREGATION: 0.29500000000000004
+[2024-11-05 17:00:14,097][flwr][INFO] - 
+[2024-11-05 17:00:14,097][flwr][INFO] - [ROUND 2]
+[2024-11-05 17:00:14,097][flwr][INFO] - configure_fit: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:00:15,114][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,116][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:15,194][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,195][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:15,225][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,228][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:15,244][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,244][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:15,279][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,280][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173188, ip=172.16.1.72, actor_id=61dc7965b09f9087adeafb3501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7193ac775ca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:15,297][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,300][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173186, ip=172.16.1.72, actor_id=ab6dd540f7da191b49c10b8501000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7ac088137c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:15,846][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:15,846][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173190, ip=172.16.1.72, actor_id=ecfe5a0ed00ee5d6b7cd615a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x718860136c70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:16,125][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:16,126][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173187, ip=172.16.1.72, actor_id=893885a771ef24c6629ce85801000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7658787afca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:16,141][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:16,142][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173184, ip=172.16.1.72, actor_id=0cd7fef2068b6dfa81ce264c01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7af4ec5c2cd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:16,149][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+
+[2024-11-05 17:00:16,149][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 84, in train
+    proximal_term += (local_weights - global_weights).norm(2)
+UnboundLocalError: local variable 'proximal_term' referenced before assignment
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=173189, ip=172.16.1.72, actor_id=a011e1340ae6a208da47f08e01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x78437808ec70>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: local variable 'proximal_term' referenced before assignment
+[2024-11-05 17:00:16,150][flwr][INFO] - aggregate_fit: received 0 results and 10 failures
+[2024-11-05 17:00:22,553][flwr][INFO] - fit progress: (2, 0.02227607283454675, {'accuracy': 0.36378205128205127}, 20.972676730001695)
+[2024-11-05 17:00:22,553][flwr][INFO] - configure_evaluate: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:00:23,302][flwr][INFO] - aggregate_evaluate: received 10 results and 0 failures
+[2024-11-05 17:00:23,302][root][INFO] - EVALUATE_METRICS_AGGREGATION: 0.31999999999999995
+[2024-11-05 17:00:23,302][flwr][INFO] - 
+[2024-11-05 17:00:23,302][flwr][INFO] - [SUMMARY]
+[2024-11-05 17:00:23,302][flwr][INFO] - Run finished 2 round(s) in 21.72s
+[2024-11-05 17:00:23,303][flwr][INFO] - 	History (loss, distributed):
+[2024-11-05 17:00:23,303][flwr][INFO] - 		round 1: 0.16387774139642713
+[2024-11-05 17:00:23,303][flwr][INFO] - 		round 2: 0.1638501638174057
+[2024-11-05 17:00:23,303][flwr][INFO] - 	History (loss, centralized):
+[2024-11-05 17:00:23,303][flwr][INFO] - 		round 0: 0.02227607283454675
+[2024-11-05 17:00:23,303][flwr][INFO] - 		round 1: 0.02227607283454675
+[2024-11-05 17:00:23,303][flwr][INFO] - 		round 2: 0.02227607283454675
+[2024-11-05 17:00:23,303][flwr][INFO] - 	History (metrics, distributed, evaluate):
+[2024-11-05 17:00:23,303][flwr][INFO] - 	{'federated_evaluate_accuracy': [(1, 0.29500000000000004),
+[2024-11-05 17:00:23,303][flwr][INFO] - 	                                 (2, 0.31999999999999995)]}
+[2024-11-05 17:00:23,304][flwr][INFO] - 	History (metrics, centralized):
+[2024-11-05 17:00:23,304][flwr][INFO] - 	{'accuracy': [(0, 0.36378205128205127),
+[2024-11-05 17:00:23,304][flwr][INFO] - 	              (1, 0.36378205128205127),
+[2024-11-05 17:00:23,304][flwr][INFO] - 	              (2, 0.36378205128205127)]}
+[2024-11-05 17:00:23,304][flwr][INFO] - 

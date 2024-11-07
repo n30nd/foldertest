@@ -1,0 +1,1401 @@
+[2024-11-05 17:30:28,315][flwr][INFO] - Starting Flower simulation, config: num_rounds=2, no round_timeout
+[2024-11-05 17:30:32,474][flwr][INFO] - Flower VCE: Ray initialized with resources: {'memory': 5200306176.0, 'object_store_memory': 2600153088.0, 'node:__internal_head__': 1.0, 'node:172.16.1.72': 1.0, 'CPU': 12.0}
+[2024-11-05 17:30:32,475][flwr][INFO] - Optimize your simulation with Flower VCE: https://flower.ai/docs/framework/how-to-run-simulations.html
+[2024-11-05 17:30:32,475][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 2, 'num_gpus': 0.0}
+[2024-11-05 17:30:32,487][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 6 actors
+[2024-11-05 17:30:32,488][flwr][INFO] - [INIT]
+[2024-11-05 17:30:32,488][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-05 17:30:35,629][flwr][INFO] - Received initial parameters from one random client
+[2024-11-05 17:30:35,630][flwr][INFO] - Starting evaluation of initial global parameters
+[2024-11-05 17:30:42,154][flwr][INFO] - initial parameters (loss, other metrics): 0.022813260364226807, {'accuracy': 0.375}
+[2024-11-05 17:30:42,154][flwr][INFO] - 
+[2024-11-05 17:30:42,154][flwr][INFO] - [ROUND 1]
+[2024-11-05 17:30:42,154][flwr][INFO] - configure_fit: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:30:43,141][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:43,141][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:44,023][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:44,023][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:45,005][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:45,006][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:45,858][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:45,858][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:46,558][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:46,559][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:47,267][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:47,267][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:47,425][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:47,425][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:47,460][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:47,460][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:47,472][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:47,472][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:47,521][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:47,521][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:47,522][flwr][INFO] - aggregate_fit: received 0 results and 10 failures
+[2024-11-05 17:30:53,924][flwr][INFO] - fit progress: (1, 0.022813260364226807, {'accuracy': 0.375}, 11.770294628000556)
+[2024-11-05 17:30:53,924][flwr][INFO] - configure_evaluate: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:30:54,675][flwr][INFO] - aggregate_evaluate: received 10 results and 0 failures
+[2024-11-05 17:30:54,676][root][INFO] - EVALUATE_METRICS_AGGREGATION: 0.33999999999999997
+[2024-11-05 17:30:54,676][flwr][INFO] - 
+[2024-11-05 17:30:54,676][flwr][INFO] - [ROUND 2]
+[2024-11-05 17:30:54,676][flwr][INFO] - configure_fit: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:30:55,675][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:55,676][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:55,694][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:55,695][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:55,826][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:55,827][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:55,850][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:55,853][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:55,915][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:55,918][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208912, ip=172.16.1.72, actor_id=96f50ccec6bec80d6141ab1a01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7df2b42cfc40>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:55,998][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:55,999][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208914, ip=172.16.1.72, actor_id=aed1384a1497ea0207288e1f01000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7623f828ecd0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:56,514][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:56,514][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208910, ip=172.16.1.72, actor_id=80c630191ab222852203576701000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7a63a454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:56,609][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:56,609][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208913, ip=172.16.1.72, actor_id=e63e5d132531799c7b31382001000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x71a48454eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:56,697][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:56,698][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208916, ip=172.16.1.72, actor_id=4ac8e3ec974ce3dda298ca5601000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7e967844fc10>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:56,765][flwr][ERROR] - Traceback (most recent call last):
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 94, in _submit_job
+    out_mssg, updated_context = self.actor_pool.get_client_result(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 398, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 279, in _fetch_future_result
+    res_cid, out_mssg, updated_context = ray.get(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 2667, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/ray/_private/worker.py", line 864, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientAppException): [36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+
+[2024-11-05 17:30:56,765][flwr][ERROR] - [36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 143, in __call__
+    return self._call(message, context)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client_app.py", line 126, in ffn
+    out_message = handle_legacy_message_from_msgtype(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/message_handler/message_handler.py", line 129, in handle_legacy_message_from_msgtype
+    fit_res = maybe_call_fit(
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/client.py", line 255, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/client/numpy_client.py", line 259, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/turorial1/client.py", line 71, in fit
+    train(self.model, self.trainloader, optim, epochs, self.device)
+  File "/media/namvq/Data/code_flwr/turorial1/model.py", line 83, in train
+    proximal_term = torch.tensor(0.0, device=net.device)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1269, in __getattr__
+    raise AttributeError("'{}' object has no attribute '{}'".format(
+AttributeError: 'Net' object has no attribute 'device'
+
+The above exception was the direct cause of the following exception:
+
+[36mray::ClientAppActor.run()[39m (pid=208915, ip=172.16.1.72, actor_id=02ae3c2b0ca0905bf56912d901000000, repr=<flwr.simulation.ray_transport.ray_actor.ClientAppActor object at 0x7c4f2864eca0>)
+  File "/media/namvq/Data/anaconda3/envs/env1/lib/python3.9/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 63, in run
+    raise ClientAppException(str(ex)) from ex
+flwr.client.client_app.ClientAppException: 
+Exception ClientAppException occurred. Message: 'Net' object has no attribute 'device'
+[2024-11-05 17:30:56,766][flwr][INFO] - aggregate_fit: received 0 results and 10 failures
+[2024-11-05 17:31:03,195][flwr][INFO] - fit progress: (2, 0.022813260364226807, {'accuracy': 0.375}, 21.040876324001147)
+[2024-11-05 17:31:03,195][flwr][INFO] - configure_evaluate: strategy sampled 10 clients (out of 20)
+[2024-11-05 17:31:03,948][flwr][INFO] - aggregate_evaluate: received 10 results and 0 failures
+[2024-11-05 17:31:03,948][root][INFO] - EVALUATE_METRICS_AGGREGATION: 0.275
+[2024-11-05 17:31:03,949][flwr][INFO] - 
+[2024-11-05 17:31:03,949][flwr][INFO] - [SUMMARY]
+[2024-11-05 17:31:03,949][flwr][INFO] - Run finished 2 round(s) in 21.79s
+[2024-11-05 17:31:03,949][flwr][INFO] - 	History (loss, distributed):
+[2024-11-05 17:31:03,949][flwr][INFO] - 		round 1: 0.17521460354328156
+[2024-11-05 17:31:03,949][flwr][INFO] - 		round 2: 0.18089358508586884
+[2024-11-05 17:31:03,949][flwr][INFO] - 	History (loss, centralized):
+[2024-11-05 17:31:03,949][flwr][INFO] - 		round 0: 0.022813260364226807
+[2024-11-05 17:31:03,950][flwr][INFO] - 		round 1: 0.022813260364226807
+[2024-11-05 17:31:03,950][flwr][INFO] - 		round 2: 0.022813260364226807
+[2024-11-05 17:31:03,950][flwr][INFO] - 	History (metrics, distributed, evaluate):
+[2024-11-05 17:31:03,950][flwr][INFO] - 	{'federated_evaluate_accuracy': [(1, 0.33999999999999997), (2, 0.275)]}
+[2024-11-05 17:31:03,950][flwr][INFO] - 	History (metrics, centralized):
+[2024-11-05 17:31:03,950][flwr][INFO] - 	{'accuracy': [(0, 0.375), (1, 0.375), (2, 0.375)]}
+[2024-11-05 17:31:03,950][flwr][INFO] - 
