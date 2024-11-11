@@ -33,9 +33,9 @@ def prepare_dataset_for_centralized_train(batch_size: int, val_ratio: float = 0.
     num_val = len(trainset) - num_train
     trainset, valset = random_split(trainset, [num_train, num_val], torch.Generator().manual_seed(2024))
 
-    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=6)
-    valloader = DataLoader(valset, batch_size=batch_size, shuffle=False, num_workers=6)
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=4)
+    valloader = DataLoader(valset, batch_size=batch_size, shuffle=False, num_workers=4)
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     print(f'Number of train samples: {len(trainset)}, val samples: {len(valset)}, test samples: {len(testloader.dataset)}')
     return trainloader, valloader, testloader
@@ -168,9 +168,9 @@ def prepare_partitioned_dataset(num_partitions: int, batch_size: int, val_ratio:
     valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
 
     # Create DataLoaders for each partition
-    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=6) for ts in trainsets]
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=4) for ts in trainsets]
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     # Calculate class distribution for each partition in trainloaders
     class_distributions = []
@@ -252,9 +252,9 @@ def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_
     
     valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
 
-    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=6) for ts in trainsets]
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=4) for ts in trainsets]
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     class_distributions = []
     for i, trainloader in enumerate(trainloaders):
@@ -318,14 +318,14 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
         noisy_dataset = [(noisy_samples[j], trainset.dataset[part_indices[j]][1]) for j in range(len(part_indices))]
         # train_partitions.append((noisy_samples, [sample[1] for sample in partition_set]))
         train_partitions.append(noisy_dataset)
-    trainloaders = [DataLoader(train_partitions[i], batch_size=batch_size, shuffle=True, num_workers=6) for i in range(num_partitions)]
+    trainloaders = [DataLoader(train_partitions[i], batch_size=batch_size, shuffle=True, num_workers=4) for i in range(num_partitions)]
     partition_len_val = [len(valset) // num_partitions] * num_partitions
     for i in range(len(valset) % num_partitions):
         partition_len_val[i] += 1
     
     valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
 ####
     class_distributions = []
@@ -385,9 +385,9 @@ def prepare_quantity_skew_dirichlet(num_partitions: int, batch_size: int, val_ra
     
     valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
 
-    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=6) for ts in trainsets]
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=4) for ts in trainsets]
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     class_distributions = []
     for i, trainloader in enumerate(trainloaders):
