@@ -1,0 +1,11 @@
+Các kiểu partitioning:
+    imbalance_label
+    imbalance_label_dirichlet
+    noise_based_imbalance
+    quantity_skew_dirichlet
+
+Chỉnh lại cấu hình .yaml của các mô hình
+
+cài đặt thêm 
+    matplotlib
+    
