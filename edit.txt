@@ -8,4 +8,5 @@ Chỉnh lại cấu hình .yaml của các mô hình
 
 cài đặt thêm 
     matplotlib
-    
+
+khi thay mô hình sang efficientnet, có các tham số bị đóng băng vì thế phải chỉnh thêm tham số nào được tối ưu trong optimizer của train

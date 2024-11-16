@@ -3,6 +3,7 @@
 from typing import List, Tuple
 
 import torch
+import torchvision
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.parameter import Parameter
@@ -11,54 +12,70 @@ from torch.utils.data import DataLoader
 
 
 
-class CNN(nn.Module):
-    """Implement a CNN model
-    Parameters
-    ----------
-    input_dim : int
-        The input dimension for classifier.
-    hidden_dims : List[int]
-        The hidden dimensions for classifier.
-    num_classes : int
-        The number of classes in the dataset.
-    """
+# class CNN(nn.Module):
+#     """Implement a CNN model
+#     Parameters
+#     ----------
+#     input_dim : int
+#         The input dimension for classifier.
+#     hidden_dims : List[int]
+#         The hidden dimensions for classifier.
+#     num_classes : int
+#         The number of classes in the dataset.
+#     """
 
-    def __init__(self, input_dim, hidden_dims, num_classes):
-        super().__init__()
-        # self.conv1 = nn.Conv2d(3, 6, 5)
-        # self.pool = nn.MaxPool2d(2, 2)
-        # self.conv2 = nn.Conv2d(6, 16, 5)
+#     def __init__(self, input_dim, hidden_dims, num_classes):
+#         super().__init__()
+#         # self.conv1 = nn.Conv2d(3, 6, 5)
+#         # self.pool = nn.MaxPool2d(2, 2)
+#         # self.conv2 = nn.Conv2d(6, 16, 5)
 
-        # self.fc1 = nn.Linear(input_dim, hidden_dims[0])
-        # self.fc2 = nn.Linear(hidden_dims[0], hidden_dims[1])
-        # self.fc3 = nn.Linear(hidden_dims[1], num_classes)
-        self.conv1 = nn.Conv2d(1, 6, 3, padding=1)
-        self.pool = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6, 16, 3, padding=1)
+#         # self.fc1 = nn.Linear(input_dim, hidden_dims[0])
+#         # self.fc2 = nn.Linear(hidden_dims[0], hidden_dims[1])
+#         # self.fc3 = nn.Linear(hidden_dims[1], num_classes)
+#         self.conv1 = nn.Conv2d(1, 6, 3, padding=1)
+#         self.pool = nn.MaxPool2d(2, 2)
+#         self.conv2 = nn.Conv2d(6, 16, 3, padding=1)
         
-        self.fc1 = nn.Linear(input_dim, hidden_dims[0])
-        self.fc2 = nn.Linear(hidden_dims[0], hidden_dims[1])
-        self.fc3 = nn.Linear(hidden_dims[1], num_classes)
+#         self.fc1 = nn.Linear(input_dim, hidden_dims[0])
+#         self.fc2 = nn.Linear(hidden_dims[0], hidden_dims[1])
+#         self.fc3 = nn.Linear(hidden_dims[1], num_classes)
 
+
+#     def forward(self, x):
+#         """Implement forward pass."""
+#         # x = self.pool(F.relu(self.conv1(x)))
+#         # x = self.pool(F.relu(self.conv2(x)))
+#         # x = x.view(-1, 16 * 5 * 5)
+
+#         # x = F.relu(self.fc1(x))
+#         # x = F.relu(self.fc2(x))
+#         # x = self.fc3(x)
+#         # return x
+#         x = self.pool(F.relu(self.conv1(x)))
+#         x = self.pool(F.relu(self.conv2(x)))
+
+#         x = x.view(-1, 16*25*25)
+#         x = F.relu(self.fc1(x))
+#         x = F.relu(self.fc2(x))
+#         x = self.fc3(x)
+#         return x
+
+class EfficientNetModel(nn.Module):
+    #Implement EfficientNet model for transfer learning
+    def __init__(self, num_classes):
+        super().__init__()
+        self.model = torchvision.models.efficientnet_b0(pretrained=True)
+        # Freeze all layers
+        for param in self.model.parameters():
+            param.requires_grad = False
+        
+        # Replace the classifier with a new one
+        num_ftrs = self.model.classifier[1].in_features
+        self.model.classifier[1] = nn.Linear(num_ftrs, num_classes)
 
     def forward(self, x):
-        """Implement forward pass."""
-        # x = self.pool(F.relu(self.conv1(x)))
-        # x = self.pool(F.relu(self.conv2(x)))
-        # x = x.view(-1, 16 * 5 * 5)
-
-        # x = F.relu(self.fc1(x))
-        # x = F.relu(self.fc2(x))
-        # x = self.fc3(x)
-        # return x
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-
-        x = x.view(-1, 16*25*25)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+        return self.model(x)
 
 
 
@@ -183,7 +200,11 @@ def train_fedavg(
     """
     criterion = nn.CrossEntropyLoss()
     optimizer = SGD(
-        net.parameters(), lr=learning_rate, momentum=momentum, weight_decay=weight_decay
+        # net.parameters(), 
+        filter(lambda p: p.requires_grad, net.parameters()),
+        lr=learning_rate, 
+        momentum=momentum, 
+        weight_decay=weight_decay
     )
     net.train()
     for _ in range(epochs):

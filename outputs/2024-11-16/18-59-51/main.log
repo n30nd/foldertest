@@ -1,0 +1,125 @@
+[2024-11-16 18:59:56,576][flwr][WARNING] - Both server and strategy were provided, ignoring strategy
+[2024-11-16 18:59:56,576][flwr][INFO] - Starting Flower simulation, config: ServerConfig(num_rounds=2, round_timeout=None)
+[2024-11-16 19:00:00,437][flwr][INFO] - Flower VCE: Ray initialized with resources: {'object_store_memory': 2299328102.0, 'CPU': 12.0, 'memory': 4598656206.0, 'GPU': 1.0, 'accelerator_type:G': 1.0, 'node:__internal_head__': 1.0, 'node:192.168.1.29': 1.0}
+[2024-11-16 19:00:00,437][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 4, 'num_gpus': 0.5}
+[2024-11-16 19:00:00,444][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 2 actors
+[2024-11-16 19:00:00,445][flwr][INFO] - Initializing global parameters
+[2024-11-16 19:00:00,445][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-16 19:00:02,260][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 67, in __init__
+    self.model = torchvision.models.efficientnet_b0(pretrained=True)
+NameError: name 'torchvision' is not defined
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run
+    job_results = job_fn()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 178, in get_parameters
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fedavg.py", line 112, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate
+    return instantiate_node(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'niid_bench.models.EfficientNetModel':
+NameError("name 'torchvision' is not defined")
+full_key: model
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target\n    return _target_(*args, **kwargs)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 67, in __init__\n    self.model = torchvision.models.efficientnet_b0(pretrained=True)\nNameError: name \'torchvision\' is not defined\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 178, in get_parameters\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fedavg.py", line 112, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate\n    return instantiate_node(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node\n    return _call_target(_target_, partial, args, kwargs, full_key)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target\n    raise InstantiationException(msg) from e\nhydra.errors.InstantiationException: Error in call to target \'niid_bench.models.EfficientNetModel\':\nNameError("name \'torchvision\' is not defined")\nfull_key: model\n',)
+
+[2024-11-16 19:00:02,260][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 67, in __init__
+    self.model = torchvision.models.efficientnet_b0(pretrained=True)
+NameError: name 'torchvision' is not defined
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run
+    job_results = job_fn()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 178, in get_parameters
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fedavg.py", line 112, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate
+    return instantiate_node(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'niid_bench.models.EfficientNetModel':
+NameError("name 'torchvision' is not defined")
+full_key: model
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target\n    return _target_(*args, **kwargs)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 67, in __init__\n    self.model = torchvision.models.efficientnet_b0(pretrained=True)\nNameError: name \'torchvision\' is not defined\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 178, in get_parameters\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fedavg.py", line 112, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate\n    return instantiate_node(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node\n    return _call_target(_target_, partial, args, kwargs, full_key)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target\n    raise InstantiationException(msg) from e\nhydra.errors.InstantiationException: Error in call to target \'niid_bench.models.EfficientNetModel\':\nNameError("name \'torchvision\' is not defined")\nfull_key: model\n',)
+[2024-11-16 19:00:02,260][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 67, in __init__
+    self.model = torchvision.models.efficientnet_b0(pretrained=True)
+NameError: name 'torchvision' is not defined
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run
+    job_results = job_fn()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 178, in get_parameters
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fedavg.py", line 112, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate
+    return instantiate_node(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'niid_bench.models.EfficientNetModel':
+NameError("name 'torchvision' is not defined")
+full_key: model
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=53372, ip=192.168.1.29, actor_id=37a969cf4612503074567cad01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7d164819b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target\n    return _target_(*args, **kwargs)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 67, in __init__\n    self.model = torchvision.models.efficientnet_b0(pretrained=True)\nNameError: name \'torchvision\' is not defined\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 178, in get_parameters\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fedavg.py", line 112, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 226, in instantiate\n    return instantiate_node(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 347, in instantiate_node\n    return _call_target(_target_, partial, args, kwargs, full_key)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target\n    raise InstantiationException(msg) from e\nhydra.errors.InstantiationException: Error in call to target \'niid_bench.models.EfficientNetModel\':\nNameError("name \'torchvision\' is not defined")\nfull_key: model\n',)
+[2024-11-16 19:00:02,260][flwr][ERROR] - Your simulation crashed :(. This could be because of several reasons.The most common are: 
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 4, 'num_gpus': 0.5} is not enough for your workload). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 4, 'num_gpus': 0.5}.

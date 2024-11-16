@@ -38,9 +38,9 @@ dataset:
 
 model:
   # model config
-  _target_: niid_bench.models.CNN
-  input_dim: 10000
-  hidden_dims: [120, 84]
+  _target_: niid_bench.models.EfficientNetModel
+  # input_dim: 10000
+  # hidden_dims: [120, 84]
   num_classes: 2
 
 strategy:

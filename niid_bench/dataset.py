@@ -6,6 +6,7 @@ import torch
 from omegaconf import DictConfig
 
 from torch.utils.data import DataLoader, random_split, Subset
+from torchvision import transforms
 from torchvision.datasets import MNIST
 from torchvision.transforms import Compose, Normalize, ToTensor
 import os
@@ -15,12 +16,24 @@ from collections import Counter
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_custom_dataset(data_path: str = "/media/namvq/Data/chest_xray"):
+# def get_custom_dataset(data_path: str = "/media/namvq/Data/chest_xray"):
+#     """Load custom dataset and apply transformations."""
+#     transform = Compose([
+#         Resize((100, 100)),
+#         Grayscale(num_output_channels=1),
+#         ToTensor()
+#     ])
+#     trainset = ImageFolder(os.path.join(data_path, 'train'), transform=transform)
+#     testset = ImageFolder(os.path.join(data_path, 'test'), transform=transform)
+#     return trainset, testset
+def get_custom_dataset(data_path: str = "/kaggle/input/chest-xray-pneumonia/chest_xray"):
     """Load custom dataset and apply transformations."""
-    transform = Compose([
-        Resize((100, 100)),
-        Grayscale(num_output_channels=1),
-        ToTensor()
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),  # Kích thước ảnh cho EfficientNet
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406],  # Mean chuẩn của ImageNet
+                             [0.229, 0.224, 0.225])  # Std chuẩn của ImageNet
     ])
     trainset = ImageFolder(os.path.join(data_path, 'train'), transform=transform)
     testset = ImageFolder(os.path.join(data_path, 'test'), transform=transform)
