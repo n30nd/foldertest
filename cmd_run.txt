@@ -1,0 +1,23 @@
+Environment Setup
+
+# Setup the base poetry environment from the niid_bench directory
+# Set python version
+pyenv local 3.10.6
+# Tell poetry to use python 3.10
+poetry env use 3.10.6
+# Now install the environment
+poetry install
+# Start the shell
+poetry shell
+
+Running the Experiments
+# Run with default config, it will run FedAvg on cpu-only mode
+python -m niid_bench.main
+# Below to enable GPU utilization by the server and the clients.
+python -m niid_bench.main server_device=cuda client_resources.num_gpus=0.2
+
+To change the configuration such as dataset or hyperparameters, specify them as part of the command line arguments.
+
+python -m niid_bench.main --config-name scaffold_base dataset_name=mnist partitioning=iid # iid
+python -m niid_bench.main --config-name fedprox_base dataset_name=mnist partitioning=dirichlet # dirichlet
+python -m niid_bench.main --config-name fednova_base dataset_name=mnist partitioning=label_quantity labels_per_client=3 # sort and partition
