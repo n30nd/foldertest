@@ -8,7 +8,7 @@ num_epochs: 4
 batch_size: 64
 clients_per_round: 10
 learning_rate: 0.001
-num_rounds: 2
+num_rounds: 30
 partitioning: "imbalance_label"
 dataset_name: "chest_xray"
 dataset_seed: 42
