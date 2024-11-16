@@ -46,9 +46,9 @@ def prepare_dataset_for_centralized_train(batch_size: int, val_ratio: float = 0.
     num_val = len(trainset) - num_train
     trainset, valset = random_split(trainset, [num_train, num_val], torch.Generator().manual_seed(2024))
 
-    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=6)
-    valloader = DataLoader(valset, batch_size=batch_size, shuffle=False, num_workers=6)
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=4)
+    valloader = DataLoader(valset, batch_size=batch_size, shuffle=False, num_workers=4)
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     print(f'Number of train samples: {len(trainset)}, val samples: {len(valset)}, test samples: {len(testloader.dataset)}')
     return trainloader, valloader, testloader
