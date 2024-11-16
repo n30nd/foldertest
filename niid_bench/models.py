@@ -267,7 +267,11 @@ def train_fedprox(
     """
     criterion = nn.CrossEntropyLoss()
     optimizer = SGD(
-        net.parameters(), lr=learning_rate, momentum=momentum, weight_decay=weight_decay
+        # net.parameters(), 
+        filter(lambda p: p.requires_grad, net.parameters()),
+        lr=learning_rate, 
+        momentum=momentum, 
+        weight_decay=weight_decay
     )
     global_params = [param.detach().clone() for param in net.parameters()]
     net.train()
