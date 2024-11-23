@@ -1,0 +1,15 @@
+[2024-11-23 11:39:24,267][flwr][WARNING] - Both server and strategy were provided, ignoring strategy
+[2024-11-23 11:39:24,267][flwr][INFO] - Starting Flower simulation, config: ServerConfig(num_rounds=2, round_timeout=None)
+[2024-11-23 11:39:29,716][flwr][INFO] - Flower VCE: Ray initialized with resources: {'node:192.168.1.62': 1.0, 'CPU': 12.0, 'object_store_memory': 3260565504.0, 'memory': 6521131008.0, 'node:__internal_head__': 1.0, 'accelerator_type:G': 1.0, 'GPU': 1.0}
+[2024-11-23 11:39:29,716][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 6, 'num_gpus': 0.5}
+[2024-11-23 11:39:29,723][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 2 actors
+[2024-11-23 11:39:29,724][flwr][INFO] - Initializing global parameters
+[2024-11-23 11:39:29,724][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-23 11:39:32,998][flwr][INFO] - Received initial parameters from one random client
+[2024-11-23 11:39:32,998][flwr][INFO] - Evaluating initial parameters
+[2024-11-23 11:39:33,448][flwr][ERROR] - mat1 and mat2 shapes cannot be multiplied (10x50176 and 10000x120)
+[2024-11-23 11:39:33,448][flwr][ERROR] - Your simulation crashed :(. This could be because of several reasons.The most common are: 
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 6, 'num_gpus': 0.5} is not enough for your workload). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 6, 'num_gpus': 0.5}.

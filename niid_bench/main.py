@@ -70,7 +70,7 @@ def main(cfg: DictConfig) -> None:
 
     device = cfg.server_device
     evaluate_fn = gen_evaluate_fn(testloader, device=device, model=cfg.model)
-
+    
     # 4. Define your strategy
     strategy = instantiate(
         cfg.strategy,

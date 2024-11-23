@@ -4,11 +4,11 @@
 # a similar configuration structure and hence be easy to customise)
 
 num_clients: 20
-num_epochs: 10
+num_epochs: 1
 batch_size: 32
 clients_per_round: 10
-learning_rate: 0.01
-num_rounds: 3
+learning_rate: 0.001
+num_rounds: 1
 partitioning: "imbalance_label"
 dataset_name: "chest_xray"
 dataset_seed: 42
@@ -37,9 +37,9 @@ dataset:
 
 model:
   # model config
-  _target_: niid_bench.models.CNN
-  input_dim: 10000
-  hidden_dims: [120, 84]
+  _target_: niid_bench.models.EfficientNetModel
+  # input_dim: 10000
+  # hidden_dims: [120, 84]
   num_classes: 2
 
 strategy:
@@ -58,4 +58,4 @@ server_device: cpu
 
 client_resources:
   num_cpus: 4
-  num_gpus: 0.0
+  num_gpus: 0

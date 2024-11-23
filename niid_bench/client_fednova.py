@@ -46,10 +46,31 @@ class FlowerClientFedNova(fl.client.NumPyClient):
         params_dict = zip(self.net.state_dict().keys(), parameters)
         state_dict = OrderedDict({k: torch.Tensor(v) for k, v in params_dict})
         self.net.load_state_dict(state_dict, strict=True)
+    # Trong client_fednova.py
+
+    # Trong client_fednova.py
+
+    # def get_parameters(self, config: Dict[str, Scalar]):
+    #     """Trả về các tham số mô hình hiện tại của local."""
+    #     state_dict = self.net.state_dict()
+    #     # Loại bỏ các buffer không cần thiết
+    #     filtered_state_dict = {k: v for k, v in state_dict.items() if 'num_batches_tracked' not in k}
+    #     return [val.cpu().numpy() for val in filtered_state_dict.values()]
+
+    # def set_parameters(self, parameters):
+    #     """Thiết lập các tham số mô hình local bằng các tham số cho trước."""
+    #     state_dict = self.net.state_dict()
+    #     keys = [k for k in state_dict.keys() if 'num_batches_tracked' not in k]
+    #     new_state_dict = OrderedDict({k: torch.tensor(v).to(self.device) for k, v in zip(keys, parameters)})
+    #     self.net.load_state_dict(new_state_dict, strict=False)
 
     def fit(self, parameters, config: Dict[str, Scalar]):
         """Implement distributed fit function for a given client for FedNova."""
+        # print("parameters", type(parameters))
+        # for idx, param in enumerate(parameters):
+        #     print(f"param {idx} shape: {param.shape}")
         self.set_parameters(parameters)
+
         a_i, g_i = train_fednova(
             self.net,
             self.trainloader,
@@ -59,8 +80,14 @@ class FlowerClientFedNova(fl.client.NumPyClient):
             self.momentum,
             self.weight_decay,
         )
+        # for idx, param in enumerate(parameters):
+        #     print(f"param {idx} shape: {param.shape}")
         # final_p_np = self.get_parameters({})
         g_i_np = [param.cpu().numpy() for param in g_i]
+        # print("g_i_np", type(g_i_np))
+        # for idx, gi in enumerate(g_i_np):
+        #     print(f"g_i_np {idx} shape: {gi.shape}")
+        # g_i_np = [param.cpu().detach().numpy() for param in g_i]
         return g_i_np, len(self.trainloader.dataset), {"a_i": a_i}
 
     def evaluate(self, parameters, config: Dict[str, Scalar]):

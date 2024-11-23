@@ -50,6 +50,8 @@ class FlowerClientFedAvg(fl.client.NumPyClient):
     def fit(self, parameters, config: Dict[str, Scalar]):
         """Implement distributed fit function for a given client for FedAvg."""
         self.set_parameters(parameters)
+        # for idx, param in enumerate(parameters):
+        #     print(f"param {idx} shape: {param.shape}")
         train_fedavg(
             self.net,
             self.trainloader,
@@ -60,6 +62,7 @@ class FlowerClientFedAvg(fl.client.NumPyClient):
             self.weight_decay,
         )
         final_p_np = self.get_parameters({})
+
         return final_p_np, len(self.trainloader.dataset), {}
 
     def evaluate(self, parameters, config: Dict[str, Scalar]):

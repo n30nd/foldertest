@@ -1,0 +1,297 @@
+[2024-11-23 11:48:23,693][flwr][WARNING] - Both server and strategy were provided, ignoring strategy
+[2024-11-23 11:48:23,694][flwr][INFO] - Starting Flower simulation, config: ServerConfig(num_rounds=2, round_timeout=None)
+[2024-11-23 11:48:28,820][flwr][INFO] - Flower VCE: Ray initialized with resources: {'node:__internal_head__': 1.0, 'CPU': 12.0, 'node:192.168.1.62': 1.0, 'GPU': 1.0, 'accelerator_type:G': 1.0, 'object_store_memory': 3273405235.0, 'memory': 6546810471.0}
+[2024-11-23 11:48:28,820][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 6, 'num_gpus': 0.5}
+[2024-11-23 11:48:28,827][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 2 actors
+[2024-11-23 11:48:28,828][flwr][INFO] - Initializing global parameters
+[2024-11-23 11:48:28,828][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-23 11:48:33,239][flwr][INFO] - Received initial parameters from one random client
+[2024-11-23 11:48:33,239][flwr][INFO] - Evaluating initial parameters
+[2024-11-23 11:48:41,165][flwr][INFO] - initial parameters (loss, other metrics): 0.6935101220774096, {'accuracy': 0.46511627906976744}
+[2024-11-23 11:48:41,166][flwr][INFO] - FL starting
+[2024-11-23 11:48:41,166][flwr][DEBUG] - fit_round 1: strategy sampled 2 clients (out of 4)
+[2024-11-23 11:48:44,353][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit
+    a_i, g_i = train_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova
+    net, local_steps = _train_one_epoch_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova
+    loss.backward()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 329.00 MiB free; 2.30 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit\n    a_i, g_i = train_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova\n    net, local_steps = _train_one_epoch_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova\n    loss.backward()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward\n    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\nRuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 329.00 MiB free; 2.30 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF\n',)
+
+[2024-11-23 11:48:44,353][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit
+    a_i, g_i = train_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova
+    net, local_steps = _train_one_epoch_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova
+    loss.backward()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 329.00 MiB free; 2.30 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit\n    a_i, g_i = train_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova\n    net, local_steps = _train_one_epoch_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova\n    loss.backward()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward\n    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\nRuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 329.00 MiB free; 2.30 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF\n',)
+[2024-11-23 11:48:45,315][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to
+    return self._apply(convert)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply
+    param_applied = fn(param)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 1 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to\n    return self._apply(convert)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply\n    param_applied = fn(param)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert\n    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)\nRuntimeError: CUDA error: out of memory\nCUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1.\n',)
+
+[2024-11-23 11:48:45,315][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to
+    return self._apply(convert)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply
+    param_applied = fn(param)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 1 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to\n    return self._apply(convert)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply\n    param_applied = fn(param)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert\n    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)\nRuntimeError: CUDA error: out of memory\nCUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1.\n',)
+[2024-11-23 11:48:45,315][flwr][DEBUG] - fit_round 1 received 0 results and 2 failures
+[2024-11-23 11:48:54,031][flwr][INFO] - fit progress: (1, 0.6935101220774096, {'accuracy': 0.46511627906976744}, 12.865439368000807)
+[2024-11-23 11:48:54,031][flwr][INFO] - evaluate_round 1: no clients selected, cancel
+[2024-11-23 11:48:54,032][flwr][DEBUG] - fit_round 2: strategy sampled 2 clients (out of 4)
+[2024-11-23 11:48:55,168][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to
+    return self._apply(convert)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply
+    param_applied = fn(param)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to\n    return self._apply(convert)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply\n    param_applied = fn(param)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert\n    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)\nRuntimeError: CUDA error: out of memory\nCUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1.\n',)
+
+[2024-11-23 11:48:55,168][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit
+    client: Client = _create_client(self.client_fn, self.cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client
+    client_like: ClientLike = client_fn(cid)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn
+    net = instantiate(model).to(device)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to
+    return self._apply(convert)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply
+    module._apply(fn)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply
+    param_applied = fn(param)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87288, ip=192.168.1.62, actor_id=719df8b6a3218acdc1d838df01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x77dbc430b100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 3 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 195, in fit\n    client: Client = _create_client(self.client_fn, self.cid)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 284, in _create_client\n    client_like: ClientLike = client_fn(cid)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 142, in client_fn\n    net = instantiate(model).to(device)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 927, in to\n    return self._apply(convert)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 579, in _apply\n    module._apply(fn)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 602, in _apply\n    param_applied = fn(param)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/nn/modules/module.py", line 925, in convert\n    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)\nRuntimeError: CUDA error: out of memory\nCUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1.\n',)
+[2024-11-23 11:48:56,234][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit
+    a_i, g_i = train_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova
+    net, local_steps = _train_one_epoch_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova
+    loss.backward()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 59.00 MiB free; 2.25 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 2 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit\n    a_i, g_i = train_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova\n    net, local_steps = _train_one_epoch_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova\n    loss.backward()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward\n    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\nRuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 59.00 MiB free; 2.25 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF\n',)
+
+[2024-11-23 11:48:56,234][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit
+    a_i, g_i = train_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova
+    net, local_steps = _train_one_epoch_fednova(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova
+    loss.backward()
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 59.00 MiB free; 2.25 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=87289, ip=192.168.1.62, actor_id=b8d5b15847910f44037b8e4901000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x723c68113100>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 2 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_fednova.py", line 74, in fit\n    a_i, g_i = train_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 429, in train_fednova\n    net, local_steps = _train_one_epoch_fednova(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 464, in _train_one_epoch_fednova\n    loss.backward()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/_tensor.py", line 396, in backward\n    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/torch/autograd/__init__.py", line 173, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\nRuntimeError: CUDA out of memory. Tried to allocate 392.00 MiB (GPU 0; 3.81 GiB total capacity; 2.14 GiB already allocated; 59.00 MiB free; 2.25 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF\n',)
+[2024-11-23 11:48:56,234][flwr][DEBUG] - fit_round 2 received 0 results and 2 failures
+[2024-11-23 11:49:05,155][flwr][INFO] - fit progress: (2, 0.6935101220774096, {'accuracy': 0.46511627906976744}, 23.989013314001568)
+[2024-11-23 11:49:05,155][flwr][INFO] - evaluate_round 2: no clients selected, cancel
+[2024-11-23 11:49:05,155][flwr][INFO] - FL finished in 23.989508820000992
+[2024-11-23 11:49:05,156][flwr][INFO] - app_fit: losses_distributed []
+[2024-11-23 11:49:05,156][flwr][INFO] - app_fit: metrics_distributed_fit {}
+[2024-11-23 11:49:05,156][flwr][INFO] - app_fit: metrics_distributed {}
+[2024-11-23 11:49:05,156][flwr][INFO] - app_fit: losses_centralized [(0, 0.6935101220774096), (1, 0.6935101220774096), (2, 0.6935101220774096)]
+[2024-11-23 11:49:05,156][flwr][INFO] - app_fit: metrics_centralized {'accuracy': [(0, 0.46511627906976744), (1, 0.46511627906976744), (2, 0.46511627906976744)]}

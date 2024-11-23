@@ -77,9 +77,68 @@ class EfficientNetModel(nn.Module):
     def forward(self, x):
         return self.model(x)
 
+class VGG9Model(nn.Module):
+    """Implement VGG9 model."""
+    def __init__(self, num_classes):
+        super().__init__()
+        self.features = nn.Sequential(
+            # Block 1
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),  # Conv layer 1
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64, 64, kernel_size=3, padding=1),  # Conv layer 2
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),        # MaxPool layer 1
 
+            # Block 2
+            nn.Conv2d(64, 128, kernel_size=3, padding=1), # Conv layer 3
+            nn.ReLU(inplace=True),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),# Conv layer 4
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),        # MaxPool layer 2
 
+            # Block 3
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),# Conv layer 5
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),# Conv layer 6
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),        # MaxPool layer 3
+        )
 
+        self.classifier = nn.Sequential(
+            nn.Linear(256 * 28 * 28, 512),  # Adjust input features based on input size
+            nn.ReLU(inplace=True),
+            nn.Linear(512, num_classes),
+        )
+
+    def forward(self, x):
+        x = self.features(x)
+        x = x.view(x.size(0), -1)  # Flatten feature map
+        x = self.classifier(x)
+        return x
+
+class VGG11Model(nn.Module):
+    # Implement VGG11 model for transfer learning
+    def __init__(self, num_classes):
+        super().__init__()
+        self.model = torchvision.models.vgg11(pretrained=True)
+        
+        # Freeze the convolutional base
+        for param in self.model.features.parameters():
+            param.requires_grad = False
+        
+        # Replace avgpool with AdaptiveAvgPool2d
+        self.model.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        
+        # Replace the classifier with a new one
+        self.model.classifier = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(512, 128),
+            nn.ReLU(inplace=True),
+            nn.Linear(128, num_classes)  # Output corresponds to num_classes
+        )
+
+    def forward(self, x):
+        return self.model(x)
 class ScaffoldOptimizer(SGD):
     """Implements SGD optimizer step function as defined in the SCAFFOLD paper."""
 
@@ -135,7 +194,11 @@ def train_scaffold(
     """
     criterion = nn.CrossEntropyLoss()
     optimizer = ScaffoldOptimizer(
-        net.parameters(), learning_rate, momentum, weight_decay
+        # net.parameters(), 
+        filter(lambda p: p.requires_grad, net.parameters()),
+        learning_rate, 
+        momentum, 
+        weight_decay
     )
     net.train()
     for _ in range(epochs):
@@ -340,9 +403,15 @@ def train_fednova(
     tuple[float, List[torch.Tensor]]
         The a_i and g_i values.
     """
+    # print("Net parameters:", net.parameters())
+    # for idx, param in enumerate(net.parameters()):
+    #     print(f"Param {idx}, shape {param.shape}")
     criterion = nn.CrossEntropyLoss()
     optimizer = SGD(
-        net.parameters(), lr=learning_rate, momentum=momentum, weight_decay=weight_decay
+        # net.parameters(), 
+        filter(lambda p: p.requires_grad, net.parameters()),
+        lr=learning_rate, momentum=momentum, 
+        weight_decay=weight_decay
     )
     net.train()
     local_steps = 0
@@ -361,7 +430,11 @@ def train_fednova(
         torch.div(prev_param - param.detach(), a_i)
         for prev_param, param in zip(prev_net, net.parameters())
     ]
-
+    # print("Net parameters:", net.parameters())
+    # for idx, param in enumerate(net.parameters()):
+    #     print(f"Param {idx}, shape {param.shape}")
+    # print("a_i:", a_i)
+    # print("g_i:", g_i)
     return a_i, g_i
 
 

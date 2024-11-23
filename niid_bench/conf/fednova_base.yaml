@@ -3,13 +3,14 @@
 # Please follow the provided structure (this will ensuring all baseline follow
 # a similar configuration structure and hence be easy to customise)
 
-num_clients: 20
-num_epochs: 3
-batch_size: 32
-clients_per_round: 10
+num_clients: 60
+num_epochs: 1
+batch_size: 10
+clients_per_round: 2
+fraction_fit: 0.1
 learning_rate: 0.001
-num_rounds: 15
-partitioning: "imbalance_label_dirichlet"
+num_rounds: 2
+partitioning: "imbalance_label"
 dataset_name: "chest_xray"
 dataset_seed: 42
 alpha: 1
@@ -30,22 +31,23 @@ dataset:
   name: ${dataset_name}
   partitioning: ${partitioning}
   batch_size: ${batch_size} # batch_size = batch_size_ratio * total_local_data_size
-  val_split: 0.0
+  val_split: 0.1
   seed: ${dataset_seed}
   alpha: ${alpha}
   labels_per_client: ${labels_per_client}
 
 model:
   # model config
-  _target_: niid_bench.models.CNN
-  input_dim: 10000
-  hidden_dims: [120, 84]
+  # _target_: niid_bench.models.EfficientNetModel
+  _target_: niid_bench.models.VGG11Model
+  # # input_dim: 10000
+  # hidden_dims: [120, 84]
   num_classes: 2
 
 strategy:
   _target_: niid_bench.strategy.FedNovaStrategy # points to your strategy (either custom or exiting in Flower)
   # rest of strategy config
-  fraction_fit: 0.00001 # because we want the number of clients to sample on each round to be solely defined by min_fit_clients
+  fraction_fit: ${fraction_fit} # because we want the number of clients to sample on each round to be solely defined by min_fit_clients
   fraction_evaluate: 0.0
   min_fit_clients: ${clients_per_round}
   min_available_clients: ${clients_per_round}
@@ -57,5 +59,5 @@ client:
 server_device: cpu
 
 client_resources:
-  num_cpus: 4
-  num_gpus: 0.0
+  num_cpus: 12
+  num_gpus: 1

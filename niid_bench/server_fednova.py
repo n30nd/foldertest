@@ -9,7 +9,8 @@ from flwr.server.client_manager import ClientManager
 from flwr.server.server import FitResultsAndFailures, Server, fit_clients
 
 from niid_bench.strategy import FedNovaStrategy
-
+import ray
+from flwr.common import parameters_to_ndarrays
 
 class FedNovaServer(Server):
     """Implement server for FedNova."""
@@ -65,6 +66,7 @@ class FedNovaServer(Server):
             len(failures),
         )
 
+
         params_np = parameters_to_ndarrays(self.parameters)
         # Aggregate training results
         aggregated_result: Tuple[
@@ -75,4 +77,10 @@ class FedNovaServer(Server):
         )
 
         parameters_aggregated, metrics_aggregated = aggregated_result
+
+        # # Giả sử server_params là danh sách các mảng NumPy
+        # print("Kích thước tham số trên server:")
+        # for idx, param in enumerate(params_np):
+        #     print(f"Tham số {idx}: {param.shape}")
+
         return parameters_aggregated, metrics_aggregated, (results, failures)
