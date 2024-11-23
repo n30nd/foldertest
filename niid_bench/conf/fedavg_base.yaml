@@ -10,7 +10,7 @@ clients_per_round: 2
 fraction_fit: 0.1
 learning_rate: 0.001
 num_rounds: 2
-partitioning: "imbalance_label"
+partitioning: "imbalance_label" #imbalance_label, imbalance_label_dirichlet, noise_based_imbalance, quantity_skew_dirichlet
 dataset_name: "chest_xray"
 dataset_seed: 42
 alpha: 1
