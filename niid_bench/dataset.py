@@ -277,7 +277,7 @@ def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_
     # Define partitions: each party has k labels
     num_labels = len(np.unique(train_labels))  # Assuming labels are 0 and 1 for binary classification
     min_size = 0
-    min_require_size = 20
+    min_require_size = 10
 
     N = len(trainset)
 
