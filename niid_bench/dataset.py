@@ -298,7 +298,7 @@ def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_
 
             partition_indices = [idx_j + idx.tolist() for idx_j, idx in zip(partition_indices, np.split(idx_label, proportions))]
             min_size = min([len(idx_j) for idx_j in partition_indices])
-        
+        print('Min size:', min_size)
     trainsets = [Subset(trainset.dataset, indices) for indices in partition_indices]
 
     partition_len_val = [len(valset) // num_partitions] * num_partitions
