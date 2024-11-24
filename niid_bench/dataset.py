@@ -518,16 +518,16 @@ def load_datasets(
 
     # partition the data
     if partitioning == "imbalance_label":
-        return prepare_partitioned_dataset(num_clients, batch_size, val_ratio, config.labels_per_client, config.dataset.seed)
+        return prepare_partitioned_dataset(num_clients, batch_size, val_ratio, config.labels_per_client, config.seed)
 
     if partitioning == "imbalance_label_dirichlet":
-        return prepare_imbalance_label_dirichlet(num_clients, batch_size, val_ratio, config.alpha, config.dataset.seed)
+        return prepare_imbalance_label_dirichlet(num_clients, batch_size, val_ratio, config.alpha, config.seed)
 
     if partitioning == "noise_based_imbalance":
-        return prepare_noise_based_imbalance(num_clients, batch_size, val_ratio, config.sigma, config.dataset.seed)
+        return prepare_noise_based_imbalance(num_clients, batch_size, val_ratio, config.sigma, config.seed)
 
     if partitioning == "quantity_skew_dirichlet":
-        return prepare_quantity_skew_dirichlet(num_clients, batch_size, val_ratio, config.alpha, config.dataset.seed)
+        return prepare_quantity_skew_dirichlet(num_clients, batch_size, val_ratio, config.alpha, config.seed)
     
 
 if __name__ == "__main__":
@@ -563,7 +563,7 @@ if __name__ == "__main__":
 #     Parameters
 #     ----------
 #     config: DictConfig
-#         Parameterises the dataset partitioning process
+#         Parameterises the dataset partitioning processa
 #     num_clients : int
 #         The number of clients that hold a part of the data
 #     val_ratio : float, optional
