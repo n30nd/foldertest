@@ -423,7 +423,7 @@ def prepare_quantity_skew_dirichlet(num_partitions: int, batch_size: int, val_ra
     all_indices = trainset.indices
 
     min_size = 0
-    while min_size < 2:
+    while min_size < 1 :
         proportions = np.random.dirichlet(np.repeat(beta, num_partitions))
         proportions = (np.cumsum(proportions) * len(all_indices)).astype(int)[:-1]
 
