@@ -58,11 +58,14 @@ import matplotlib.pyplot as plt
 #     trainset = ImageFolder(os.path.join(data_path, 'train'), transform=train_transform)
 #     testset = ImageFolder(os.path.join(data_path, 'test'), transform=test_transform)
 #     return trainset, testset
-def get_custom_dataset(data_path: str = "/kaggle/input/chest-xray-pneumonia/chest_xray"):
+def get_custom_dataset(data_path: str = "/media/namvq/Data/chest_xray"):
     """Load custom dataset and apply transformations."""
     train_transform = transforms.Compose([
         transforms.Resize((150, 150)),  # Kích thước ảnh cho VGG
+        transforms.RandomAffine(degrees=0, shear=10),
         transforms.RandomHorizontalFlip(),
+        transforms.RandomResizedCrop(150, scale=(0.8, 1.0)),
+        transforms.RandomAffine(degrees=0, translate=(0.2, 0)),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406],  # Mean chuẩn của ImageNet
                              [0.229, 0.224, 0.225])  # Std chuẩn của ImageNet
@@ -423,7 +426,7 @@ def prepare_quantity_skew_dirichlet(num_partitions: int, batch_size: int, val_ra
     all_indices = trainset.indices
 
     min_size = 0
-    while min_size < 1 :
+    while min_size < 1:
         proportions = np.random.dirichlet(np.repeat(beta, num_partitions))
         proportions = (np.cumsum(proportions) * len(all_indices)).astype(int)[:-1]
 
