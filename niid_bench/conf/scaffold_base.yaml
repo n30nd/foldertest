@@ -13,6 +13,7 @@ partitioning: "imbalance_label"
 dataset_name: "chest_xray"
 dataset_seed: 42
 alpha: 0.5
+sigma: 0.1
 labels_per_client: 2 # only used when partitioning is label quantity
 momentum: 0.9
 weight_decay: 0.00001
@@ -33,6 +34,7 @@ dataset:
   val_split: 0.0
   seed: ${dataset_seed}
   alpha: ${alpha}
+  sigma: ${sigma}
   labels_per_client: ${labels_per_client}
 
 model:
