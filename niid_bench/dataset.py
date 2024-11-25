@@ -58,7 +58,7 @@ import matplotlib.pyplot as plt
 #     trainset = ImageFolder(os.path.join(data_path, 'train'), transform=train_transform)
 #     testset = ImageFolder(os.path.join(data_path, 'test'), transform=test_transform)
 #     return trainset, testset
-def get_custom_dataset(data_path: str = "/kaggle/input/chest-xray-pneumonia/chest_xray"):
+def get_custom_dataset(data_path: str = "/media/namvq/Data/chest_xray"):
     """Load custom dataset and apply transformations."""
     train_transform = transforms.Compose([
         transforms.Resize((150, 150)),  # Kích thước ảnh cho VGG
@@ -347,6 +347,25 @@ def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_
 def apply_gaussian_noise(tensor, std_dev):
     noise = torch.randn_like(tensor) * std_dev
     return tensor + noise
+
+# Hàm đảo ngược chuẩn hóa
+def unnormalize_image(image_tensor, mean, std):
+    # Đảo ngược Normalize: (image * std) + mean
+    for t, m, s in zip(image_tensor, mean, std):
+        t.mul_(s).add_(m)  # Thực hiện từng kênh
+    return image_tensor
+
+# Hàm hiển thị ảnh từ một tensor
+def display_image(image_tensor, mean, std):
+    # Đảo ngược chuẩn hóa
+    image_tensor = unnormalize_image(image_tensor, mean, std)
+    # Chuyển tensor thành NumPy array và điều chỉnh thứ tự kênh màu (CHW -> HWC)
+    image_numpy = image_tensor.permute(1, 2, 0).numpy()
+    # Cắt giá trị ảnh về phạm vi [0, 1] để hiển thị đúng
+    image_numpy = image_numpy.clip(0, 1)
+    # Trả về ảnh NumPy
+    return image_numpy
+
 def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_ratio: float = 0.1, sigma: float = 0.05, seed: int = 42):
     """
     Chia du lieu ngau nhien va deu cho cac ben, sau do them noise vao cac ben
@@ -410,6 +429,43 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
     os.makedirs(output_dir, exist_ok=True)
     plt.savefig(os.path.join(output_dir, 'data_partition.png'))
     plt.close()
+
+    #Lưu ảnh nhiễu vào running_outputs
+    # Mean và std từ Normalize
+    mean = [0.485, 0.456, 0.406]
+    std = [0.229, 0.224, 0.225]
+
+    # Tạo thư mục lưu ảnh nếu chưa tồn tại
+    output_dir = "running_outputs"
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Khởi tạo một lưới 10x6 để hiển thị ảnh
+    fig, axes = plt.subplots(10, 6, figsize=(15, 25))
+
+    # Duyệt qua 60 trainloaders và hiển thị ảnh đầu tiên
+    for i, trainloader in enumerate(trainloaders[:num_partitions]):
+        # Lấy ảnh đầu tiên từ trainloader
+        image_tensor = trainloader.dataset[0][0].clone()  # Clone để tránh thay đổi dữ liệu gốc
+        
+        # Tìm vị trí hàng, cột trong lưới
+        row, col = divmod(i, 6)
+        plt.sca(axes[row, col])  # Đặt trục hiện tại là vị trí hàng, cột trong lưới
+        
+        # Hiển thị ảnh
+        image_numpy = display_image(image_tensor, mean, std)
+        axes[row, col].imshow(image_numpy)
+        axes[row, col].axis('off')
+    plt.title(f"Noise image with sigma from {sigma * 1 / num_partitions} to {sigma}")
+    # Điều chỉnh layout để không bị chồng lấn
+    plt.tight_layout()
+
+    # Lưu ảnh thay vì hiển thị
+    output_path = os.path.join(output_dir, "image_noise.png")
+    plt.savefig(output_path, dpi=300)  # Lưu ảnh với chất lượng cao
+
+    plt.close()  # Đóng figure
+
+    print(f"Ảnh đã được lưu tại {output_path}")
 
     print(f'Number of train samples: {len(trainset)}, val samples: {len(valset)}, test samples: {len(testloader.dataset)}')
 
@@ -536,8 +592,8 @@ def load_datasets(
 if __name__ == "__main__":
     # prepare_imbalance_label_dirichlet(5, 32, 0.1, 0.5)
     # prepare_partitioned_dataset(5, 32, 0.1, 1)
-    # prepare_noise_based_imbalance(5, 32, 0.1, 0.05)
-    prepare_quantity_skew_dirichlet(5, 32, 0.1, 10)
+    prepare_noise_based_imbalance(5, 10, 0.1, 0.1)
+    # prepare_quantity_skew_dirichlet(5, 32, 0.1, 10)
 
 
 
