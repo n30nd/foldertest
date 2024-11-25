@@ -1,0 +1,3 @@
+- partitioning=quantity_skew_dirichlet
+- alpha=0.3
+- num_clients=50

@@ -44,18 +44,51 @@ FitResultsAndFailures = Tuple[
 class ScaffoldServer(Server):
     """Implement server for SCAFFOLD."""
 
+    # def __init__(
+    #     self,
+    #     strategy: Strategy,
+    #     model: DictConfig,
+    #     client_manager: Optional[ClientManager] = None,
+    # ):
+    #     if client_manager is None:
+    #         client_manager = SimpleClientManager()
+    #     super().__init__(client_manager=client_manager, strategy=strategy)
+    #     self.model_params = instantiate(model)
+    #     self.server_cv: List[torch.Tensor] = []
     def __init__(
-        self,
-        strategy: Strategy,
-        model: DictConfig,
-        client_manager: Optional[ClientManager] = None,
-    ):
-        if client_manager is None:
-            client_manager = SimpleClientManager()
-        super().__init__(client_manager=client_manager, strategy=strategy)
-        self.model_params = instantiate(model)
-        self.server_cv: List[torch.Tensor] = []
+            self,
+            strategy: Strategy,
+            model: DictConfig,
+            client_manager: Optional[ClientManager] = None,
+        ):
+            if client_manager is None:
+                client_manager = SimpleClientManager()
+            super().__init__(client_manager=client_manager, strategy=strategy)
+            self.model_params = instantiate(model)
+            # Initialize server_cv with zeros of same shape as model parameters
+            self.server_cv = [torch.zeros_like(param) for param in self.model_params.parameters()]
 
+    # def _get_initial_parameters(self, timeout: Optional[float]) -> Parameters:
+    #     """Get initial parameters from one of the available clients."""
+    #     # Server-side parameter initialization
+    #     parameters: Optional[Parameters] = self.strategy.initialize_parameters(
+    #         client_manager=self._client_manager
+    #     )
+    #     if parameters is not None:
+    #         log(INFO, "Using initial parameters provided by strategy")
+    #         return parameters
+
+    #     # Get initial parameters from one of the clients
+    #     log(INFO, "Requesting initial parameters from one random client")
+    #     random_client = self._client_manager.sample(1)[0]
+    #     ins = GetParametersIns(config={})
+    #     get_parameters_res = random_client.get_parameters(ins=ins, timeout=timeout)
+    #     log(INFO, "Received initial parameters from one random client")
+    #     self.server_cv = [
+    #         torch.from_numpy(t)
+    #         for t in parameters_to_ndarrays(get_parameters_res.parameters)
+    #     ]
+    #     return get_parameters_res.parameters
     def _get_initial_parameters(self, timeout: Optional[float]) -> Parameters:
         """Get initial parameters from one of the available clients."""
         # Server-side parameter initialization
@@ -72,11 +105,9 @@ class ScaffoldServer(Server):
         ins = GetParametersIns(config={})
         get_parameters_res = random_client.get_parameters(ins=ins, timeout=timeout)
         log(INFO, "Received initial parameters from one random client")
-        self.server_cv = [
-            torch.from_numpy(t)
-            for t in parameters_to_ndarrays(get_parameters_res.parameters)
-        ]
+        # Do not overwrite self.server_cv here
         return get_parameters_res.parameters
+
 
     # pylint: disable=too-many-locals
     def fit_round(
@@ -158,15 +189,28 @@ class ScaffoldServer(Server):
         return parameters_updated, metrics_aggregated, (results, failures)
 
 
+# def update_parameters_with_cv(
+#     parameters: Parameters, s_cv: List[torch.Tensor]
+# ) -> Parameters:
+#     """Extend the list of parameters with the server control variate."""
+#     # extend the list of parameters arrays with the cv arrays
+#     cv_np = [cv.numpy() for cv in s_cv]
+#     parameters_np = parameters_to_ndarrays(parameters)
+#     parameters_np.extend(cv_np)
+#     return ndarrays_to_parameters(parameters_np)
 def update_parameters_with_cv(
     parameters: Parameters, s_cv: List[torch.Tensor]
 ) -> Parameters:
     """Extend the list of parameters with the server control variate."""
-    # extend the list of parameters arrays with the cv arrays
-    cv_np = [cv.numpy() for cv in s_cv]
+    # Convert s_cv to numpy arrays
+    cv_np = [cv.cpu().numpy() for cv in s_cv]
     parameters_np = parameters_to_ndarrays(parameters)
+    # Check if lengths match
+    if len(parameters_np) != len(cv_np):
+        raise ValueError("Number of parameters and server_cv do not match.")
     parameters_np.extend(cv_np)
     return ndarrays_to_parameters(parameters_np)
+
 
 
 def fit_clients(

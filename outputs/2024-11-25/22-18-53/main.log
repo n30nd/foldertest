@@ -1,0 +1,639 @@
+[2024-11-25 22:19:00,028][flwr][WARNING] - Both server and strategy were provided, ignoring strategy
+[2024-11-25 22:19:00,028][flwr][INFO] - Starting Flower simulation, config: ServerConfig(num_rounds=1, round_timeout=None)
+[2024-11-25 22:19:06,040][flwr][INFO] - Flower VCE: Ray initialized with resources: {'memory': 6014676174.0, 'node:__internal_head__': 1.0, 'CPU': 12.0, 'node:192.168.1.62': 1.0, 'object_store_memory': 3007338086.0, 'accelerator_type:G': 1.0, 'GPU': 1.0}
+[2024-11-25 22:19:06,040][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 4, 'num_gpus': 1}
+[2024-11-25 22:19:06,049][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 1 actors
+[2024-11-25 22:19:06,049][flwr][INFO] - Initializing global parameters
+[2024-11-25 22:19:06,049][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-25 22:19:12,347][flwr][INFO] - Received initial parameters from one random client
+[2024-11-25 22:19:12,365][flwr][INFO] - Evaluating initial parameters
+[2024-11-25 22:19:17,256][flwr][INFO] - initial parameters (loss, other metrics): 0.6882979296898657, {'accuracy': 0.5581395348837209}
+[2024-11-25 22:19:17,256][flwr][INFO] - FL starting
+[2024-11-25 22:19:17,292][flwr][DEBUG] - fit_round 1: strategy sampled 10 clients (out of 20)
+[2024-11-25 22:19:21,808][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 19 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:21,808][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 19 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:23,891][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 2 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:23,891][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 2 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:25,810][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 8 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:25,810][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 8 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:27,758][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 4 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:27,758][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 4 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:29,265][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 18 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:29,265][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 18 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:30,792][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 9 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:30,793][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 9 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:32,748][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 0 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:32,749][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 0 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:34,708][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 6 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:34,708][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 6 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:36,650][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 14 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:36,651][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 14 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:38,573][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 1 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+
+[2024-11-25 22:19:38,574][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=47903, ip=192.168.1.62, actor_id=f161f9fdbd9b6aba5b96d2c101000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x7e7dfd38b0a0>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 1 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 205, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 227, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 157, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n',)
+[2024-11-25 22:19:38,574][flwr][DEBUG] - fit_round 1 received 0 results and 10 failures
+[2024-11-25 22:19:38,574][flwr][ERROR] - list index out of range
+[2024-11-25 22:19:38,574][flwr][ERROR] - Your simulation crashed :(. This could be because of several reasons.The most common are: 
+	 > Your system couldn't fit a single VirtualClient: try lowering `client_resources`.
+	 > All the actors in your pool crashed. This could be because: 
+		 - You clients hit an out-of-memory (OOM) error and actors couldn't recover from it. Try launching your simulation with more generous `client_resources` setting (i.e. it seems {'num_cpus': 4, 'num_gpus': 1} is not enough for your workload). Use fewer concurrent actors. 
+		 - You were running a multi-node simulation and all worker nodes disconnected. The head node might still be alive but cannot accommodate any actor with resources: {'num_cpus': 4, 'num_gpus': 1}.

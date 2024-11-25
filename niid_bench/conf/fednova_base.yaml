@@ -4,7 +4,7 @@
 # a similar configuration structure and hence be easy to customise)
 
 num_clients: 60
-num_epochs: 1
+num_epochs: 5
 batch_size: 10
 clients_per_round: 2
 fraction_fit: 0.1
@@ -14,6 +14,7 @@ partitioning: "imbalance_label"
 dataset_name: "chest_xray"
 dataset_seed: 42
 alpha: 1
+sigma: 0.1
 labels_per_client: 2 # only used when partitioning is label quantity
 momentum: 0.9
 weight_decay: 0.00001
@@ -34,6 +35,7 @@ dataset:
   val_split: 0.1
   seed: ${dataset_seed}
   alpha: ${alpha}
+  sigma: ${sigma}
   labels_per_client: ${labels_per_client}
 
 model:

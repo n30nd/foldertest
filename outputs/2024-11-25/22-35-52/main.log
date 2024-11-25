@@ -1,0 +1,632 @@
+[2024-11-25 22:35:58,000][flwr][WARNING] - Both server and strategy were provided, ignoring strategy
+[2024-11-25 22:35:58,000][flwr][INFO] - Starting Flower simulation, config: ServerConfig(num_rounds=1, round_timeout=None)
+[2024-11-25 22:36:03,527][flwr][INFO] - Flower VCE: Ray initialized with resources: {'object_store_memory': 3820610764.0, 'memory': 7641221531.0, 'node:__internal_head__': 1.0, 'GPU': 1.0, 'accelerator_type:G': 1.0, 'node:192.168.1.62': 1.0, 'CPU': 12.0}
+[2024-11-25 22:36:03,528][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 4, 'num_gpus': 1}
+[2024-11-25 22:36:03,537][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 1 actors
+[2024-11-25 22:36:03,538][flwr][INFO] - Initializing global parameters
+[2024-11-25 22:36:03,538][flwr][INFO] - Requesting initial parameters from one random client
+[2024-11-25 22:36:07,824][flwr][INFO] - Received initial parameters from one random client
+[2024-11-25 22:36:07,838][flwr][INFO] - Evaluating initial parameters
+[2024-11-25 22:36:12,693][flwr][INFO] - initial parameters (loss, other metrics): 0.6966443098792734, {'accuracy': 0.5348837209302325}
+[2024-11-25 22:36:12,693][flwr][INFO] - FL starting
+[2024-11-25 22:36:12,724][flwr][DEBUG] - fit_round 1: strategy sampled 10 clients (out of 20)
+[2024-11-25 22:36:15,513][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 9 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:15,513][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 9 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:17,317][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 16 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:17,317][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 16 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:18,993][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 4 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:18,994][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 4 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:20,608][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 0 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:20,608][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 0 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:22,186][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 12 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:22,186][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 12 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:23,774][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 13 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:23,774][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 13 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:25,309][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 17 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:25,309][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 17 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:26,861][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 6 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:26,861][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 6 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:28,457][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 5 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:28,457][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 5 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+[2024-11-25 22:36:29,995][flwr][ERROR] - Traceback (most recent call last):
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 140, in _submit_job
+    res = self.actor_pool.get_client_result(self.cid, timeout)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 402, in get_client_result
+    return self._fetch_future_result(cid)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 288, in _fetch_future_result
+    res_cid, res = ray.get(future)  # type: (str, ClientRes)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 24, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/ray/_private/worker.py", line 2524, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ClientException): [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 18 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)
+
+[2024-11-25 22:36:29,995][flwr][ERROR] - [36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit
+    return maybe_call_fit(
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit
+    return client.fit(fit_ins)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit
+    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit
+    train_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold
+    net = _train_one_epoch_scaffold(
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold
+    optimizer.step_custom(server_cv, client_cv)
+  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom
+    par.data.add_(s_cv - c_cv, alpha=-group["lr"])
+RuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3
+
+The above exception was the direct cause of the following exception:
+
+[36mray::DefaultActor.run()[39m (pid=71666, ip=192.168.1.62, actor_id=a027cac138e71f1853bbd4cd01000000, repr=<flwr.simulation.ray_transport.ray_actor.DefaultActor object at 0x73b52b793040>)
+  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 72, in run
+    raise ClientException(str(message)) from ex
+flwr.simulation.ray_transport.ray_actor.ClientException: 
+>>>>>>>A ClientException occurred.('\n\tSomething went wrong when running your client workload.\n\tClient 18 crashed when the DefaultActor was running its workload.\n\tException triggered on the client side: Traceback (most recent call last):\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_actor.py", line 60, in run\n    job_results = job_fn()\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/simulation/ray_transport/ray_client_proxy.py", line 196, in fit\n    return maybe_call_fit(\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/client.py", line 217, in maybe_call_fit\n    return client.fit(fit_ins)\n  File "/home/namvq/.cache/pypoetry/virtualenvs/niid-bench-orV17zke-py3.10/lib/python3.10/site-packages/flwr/client/app.py", line 333, in _fit\n    results = self.numpy_client.fit(parameters, ins.config)  # type: ignore\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/client_scaffold.py", line 78, in fit\n    train_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 207, in train_scaffold\n    net = _train_one_epoch_scaffold(\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 229, in _train_one_epoch_scaffold\n    optimizer.step_custom(server_cv, client_cv)\n  File "/media/namvq/Data/code_flwr/niid_bench/niid_bench/models.py", line 159, in step_custom\n    par.data.add_(s_cv - c_cv, alpha=-group["lr"])\nRuntimeError: The size of tensor a (512) must match the size of tensor b (3) at non-singleton dimension 3\n',)

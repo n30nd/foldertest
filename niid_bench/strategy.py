@@ -106,6 +106,9 @@ class ScaffoldStrategy(FedAvg):
         combined_parameters_all_updates = [
             parameters_to_ndarrays(fit_res.parameters) for _, fit_res in results
         ]
+        # Kiểm tra xem combined_parameters_all_updates[0] có rỗng không
+        if not combined_parameters_all_updates[0]:
+            raise ValueError("Received empty parameter updates from clients.")
         len_combined_parameter = len(combined_parameters_all_updates[0])
         num_examples_all_updates = [fit_res.num_examples for _, fit_res in results]
         # Zip parameters and num_examples

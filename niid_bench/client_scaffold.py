@@ -61,20 +61,83 @@ class FlowerClientScaffold(fl.client.NumPyClient):
         state_dict = OrderedDict({k: torch.Tensor(v) for k, v in params_dict})
         self.net.load_state_dict(state_dict, strict=True)
 
+    # def fit(self, parameters, config: Dict[str, Scalar]):
+    #     """Implement distributed fit function for a given client for SCAFFOLD."""
+    #     # the first half are model parameters and the second are the server_cv
+    #     server_cv = parameters[len(parameters) // 2 :]
+    #     parameters = parameters[: len(parameters) // 2]
+    #     self.set_parameters(parameters)
+    #     self.client_cv = []
+    #     for param in self.net.parameters():
+    #         self.client_cv.append(param.clone().detach())
+    #     # load client control variate
+    #     if os.path.exists(f"{self.dir}/client_cv_{self.cid}.pt"):
+    #         self.client_cv = torch.load(f"{self.dir}/client_cv_{self.cid}.pt")
+    #     # convert the server control variate to a list of tensors
+    #     server_cv = [torch.Tensor(cv) for cv in server_cv]
+    #     train_scaffold(
+    #         self.net,
+    #         self.trainloader,
+    #         self.device,
+    #         self.num_epochs,
+    #         self.learning_rate,
+    #         self.momentum,
+    #         self.weight_decay,
+    #         server_cv,
+    #         self.client_cv,
+    #     )
+    #     x = parameters
+    #     y_i = self.get_parameters(config={})
+    #     c_i_n = []
+    #     server_update_x = []
+    #     server_update_c = []
+    #     # update client control variate c_i_1 = c_i - c + 1/eta*K (x - y_i)
+    #     for c_i_j, c_j, x_j, y_i_j in zip(self.client_cv, server_cv, x, y_i):
+    #         c_i_n.append(
+    #             c_i_j
+    #             - c_j
+    #             + (1.0 / (self.learning_rate * self.num_epochs * len(self.trainloader)))
+    #             * (x_j - y_i_j)
+    #         )
+    #         # y_i - x, c_i_n - c_i for the server
+    #         server_update_x.append((y_i_j - x_j))
+    #         server_update_c.append((c_i_n[-1] - c_i_j).cpu().numpy())
+    #     self.client_cv = c_i_n
+    #     torch.save(self.client_cv, f"{self.dir}/client_cv_{self.cid}.pt")
+
+    #     combined_updates = server_update_x + server_update_c
+
+    #     return (
+    #         combined_updates,
+    #         len(self.trainloader.dataset),
+    #         {},
+    #     )
     def fit(self, parameters, config: Dict[str, Scalar]):
         """Implement distributed fit function for a given client for SCAFFOLD."""
-        # the first half are model parameters and the second are the server_cv
-        server_cv = parameters[len(parameters) // 2 :]
-        parameters = parameters[: len(parameters) // 2]
-        self.set_parameters(parameters)
-        self.client_cv = []
-        for param in self.net.parameters():
-            self.client_cv.append(param.clone().detach())
-        # load client control variate
+        # Chia tách tham số thành tham số mô hình và server_cv
+        num_params = len(parameters) // 2
+        parameters_model = parameters[:num_params]
+        server_cv = parameters[num_params:]
+
+        # Chuyển đổi tham số và server_cv thành tensor trên thiết bị đúng
+        parameters_model = [torch.tensor(p, device=self.device) for p in parameters_model]
+        server_cv = [torch.tensor(cv, device=self.device) for cv in server_cv]
+
+        self.set_parameters(parameters_model)
+
+        # Khởi tạo client_cv nếu chưa có
+        if not self.client_cv:
+            self.client_cv = []
+            for param in self.net.parameters():
+                self.client_cv.append(torch.zeros_like(param, device=self.device))
+
+        # Tải biến điều khiển của client
         if os.path.exists(f"{self.dir}/client_cv_{self.cid}.pt"):
-            self.client_cv = torch.load(f"{self.dir}/client_cv_{self.cid}.pt")
-        # convert the server control variate to a list of tensors
-        server_cv = [torch.Tensor(cv) for cv in server_cv]
+            self.client_cv = torch.load(f"{self.dir}/client_cv_{self.cid}.pt", map_location=self.device)
+        else:
+            self.client_cv = [cv.to(self.device) for cv in self.client_cv]
+
+        # Huấn luyện mô hình
         train_scaffold(
             self.net,
             self.trainloader,
@@ -86,24 +149,27 @@ class FlowerClientScaffold(fl.client.NumPyClient):
             server_cv,
             self.client_cv,
         )
-        x = parameters
-        y_i = self.get_parameters(config={})
+
+        # Lấy tham số cập nhật
+        y_i = self.get_parameters(config={})  # Trả về danh sách các mảng numpy
+        x = [p.cpu().numpy() for p in parameters_model]  # Tham số ban đầu dưới dạng mảng numpy
+
         c_i_n = []
         server_update_x = []
         server_update_c = []
-        # update client control variate c_i_1 = c_i - c + 1/eta*K (x - y_i)
+
+        # Cập nhật biến điều khiển của client
         for c_i_j, c_j, x_j, y_i_j in zip(self.client_cv, server_cv, x, y_i):
-            c_i_n.append(
-                c_i_j
-                - c_j
-                + (1.0 / (self.learning_rate * self.num_epochs * len(self.trainloader)))
-                * (x_j - y_i_j)
-            )
-            # y_i - x, c_i_n - c_i for the server
-            server_update_x.append((y_i_j - x_j))
-            server_update_c.append((c_i_n[-1] - c_i_j).cpu().numpy())
+            x_j = torch.from_numpy(x_j).to(self.device)
+            y_i_j = torch.from_numpy(y_i_j).to(self.device)
+            c_i_n_j = c_i_j - c_j + (1.0 / (self.learning_rate * self.num_epochs * len(self.trainloader))) * (x_j - y_i_j)
+            c_i_n.append(c_i_n_j)
+            # y_i - x, c_i_n - c_i cho server
+            server_update_x.append((y_i_j - x_j).cpu().numpy())
+            server_update_c.append((c_i_n_j - c_i_j).cpu().numpy())
+
         self.client_cv = c_i_n
-        torch.save(self.client_cv, f"{self.dir}/client_cv_{self.cid}.pt")
+        torch.save([cv.cpu() for cv in self.client_cv], f"{self.dir}/client_cv_{self.cid}.pt")
 
         combined_updates = server_update_x + server_update_c
 
@@ -112,6 +178,7 @@ class FlowerClientScaffold(fl.client.NumPyClient):
             len(self.trainloader.dataset),
             {},
         )
+
 
     def evaluate(self, parameters, config: Dict[str, Scalar]):
         """Evaluate using given parameters."""

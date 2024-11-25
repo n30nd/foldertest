@@ -58,11 +58,14 @@ import matplotlib.pyplot as plt
 #     trainset = ImageFolder(os.path.join(data_path, 'train'), transform=train_transform)
 #     testset = ImageFolder(os.path.join(data_path, 'test'), transform=test_transform)
 #     return trainset, testset
-def get_custom_dataset(data_path: str = "/media/namvq/Data/chest_xray"):
+def get_custom_dataset(data_path: str = "/kaggle/input/chest-xray-pneumonia/chest_xray"):
     """Load custom dataset and apply transformations."""
     train_transform = transforms.Compose([
         transforms.Resize((150, 150)),  # Kích thước ảnh cho VGG
+        transforms.RandomAffine(degrees=0, shear=10),
         transforms.RandomHorizontalFlip(),
+        transforms.RandomResizedCrop(150, scale=(0.8, 1.0)),
+        transforms.RandomAffine(degrees=0, translate=(0.2, 0)),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406],  # Mean chuẩn của ImageNet
                              [0.229, 0.224, 0.225])  # Std chuẩn của ImageNet
@@ -78,12 +81,12 @@ def get_custom_dataset(data_path: str = "/media/namvq/Data/chest_xray"):
     return trainset, testset
 
 
-def prepare_dataset_for_centralized_train(batch_size: int, val_ratio: float = 0.1):
+def prepare_dataset_for_centralized_train(batch_size: int, val_ratio: float = 0.1, seed: int = 42):
     trainset, testset = get_custom_dataset()
     # Split trainset into trainset and valset
     num_train = int((1 - val_ratio) * len(trainset))
     num_val = len(trainset) - num_train
-    trainset, valset = random_split(trainset, [num_train, num_val], torch.Generator().manual_seed(2024))
+    trainset, valset = random_split(trainset, [num_train, num_val], torch.Generator().manual_seed(seed))
 
     trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=4)
     valloader = DataLoader(valset, batch_size=batch_size, shuffle=False, num_workers=4)
@@ -93,14 +96,14 @@ def prepare_dataset_for_centralized_train(batch_size: int, val_ratio: float = 0.
     return trainloader, valloader, testloader
 
 
-def prepare_dataset(num_partitions: int, batch_size: int, val_ratio: float = 0.1, alpha: float = 100):
+def prepare_dataset(num_partitions: int, batch_size: int, val_ratio: float = 0.1, alpha: float = 100, seed: int = 42):
     """Load custom dataset and generate non-IID partitions using Dirichlet distribution."""
     trainset, testset = get_custom_dataset()
     
     # Split trainset into trainset and valset
     num_train = int((1 - val_ratio) * len(trainset))
     num_val = len(trainset) - num_train
-    trainset, valset = random_split(trainset, [num_train, num_val], torch.Generator().manual_seed(2024))
+    trainset, valset = random_split(trainset, [num_train, num_val], torch.Generator().manual_seed(seed))
     
     # Get labels for the entire trainset
     train_labels = np.array([trainset.dataset.targets[i] for i in trainset.indices])
@@ -125,7 +128,7 @@ def prepare_dataset(num_partitions: int, batch_size: int, val_ratio: float = 0.1
     for i in range(len(valset) % num_partitions):
         partition_len_val[i] += 1
 
-    valsets = random_split(valset, partition_len_val, torch.Generator().manual_seed(2023))
+    valsets = random_split(valset, partition_len_val, torch.Generator().manual_seed(seed))
     
     # Create DataLoaders for each partition
     trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=2) for ts in trainsets]
@@ -160,14 +163,14 @@ def prepare_dataset(num_partitions: int, batch_size: int, val_ratio: float = 0.1
     print(f'Number of train samples: {len(trainset)}, val samples: {len(valset)}, test samples: {len(testloader.dataset)}')
     return trainloaders, valloaders, testloader
 
-def prepare_partitioned_dataset(num_partitions: int, batch_size: int, val_ratio: float = 0.1, num_labels_each_party: int = 1):
+def prepare_partitioned_dataset(num_partitions: int, batch_size: int, val_ratio: float = 0.1, num_labels_each_party: int = 1, seed: int = 42):
     """Load custom dataset and generate partitions where each party has a fixed number of labels."""
     trainset, testset = get_custom_dataset()  # Load datasets
 
     # Split the trainset into trainset and valset based on the validation ratio
     num_train = int((1 - val_ratio) * len(trainset))
     num_val = len(trainset) - num_train
-    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(2023))
+    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(seed))
 
     # Get labels for the entire trainset
     train_labels = np.array([trainset.dataset.targets[i] for i in trainset.indices])
@@ -217,12 +220,12 @@ def prepare_partitioned_dataset(num_partitions: int, batch_size: int, val_ratio:
     for i in range(len(valset) % num_partitions):
         partition_len_val[i] += 1
     
-    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
+    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(seed))
 
     # Create DataLoaders for each partition
-    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=6) for ts in trainsets]
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=4) for ts in trainsets]
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     # Calculate class distribution for each partition in trainloaders
     class_distributions = []
@@ -259,14 +262,14 @@ def prepare_partitioned_dataset(num_partitions: int, batch_size: int, val_ratio:
     print(f'Number of train samples: {len(trainset)}, val samples: {len(valset)}, test samples: {len(testloader.dataset)}')
     return trainloaders, valloaders, testloader
 
-def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_ratio: float = 0.1, beta: float = 0.5):
+def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_ratio: float = 0.1, beta: float = 0.5, seed: int = 42):
     """Load custom dataset and generate partitions where each party has a fixed number of labels."""
     trainset, testset = get_custom_dataset()  # Load datasets
 
     # Split the trainset into trainset and valset based on the validation ratio
     num_train = int((1 - val_ratio) * len(trainset))
     num_val = len(trainset) - num_train
-    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(2023))
+    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(seed))
 
     # Get labels for the entire trainset
     train_labels = np.array([trainset.dataset.targets[i] for i in trainset.indices])
@@ -302,11 +305,11 @@ def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_
     for i in range(len(valset) % num_partitions):
         partition_len_val[i] += 1
     
-    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
+    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(seed))
 
-    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=6) for ts in trainsets]
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=4) for ts in trainsets]
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     class_distributions = []
     for i, trainloader in enumerate(trainloaders):
@@ -344,7 +347,26 @@ def prepare_imbalance_label_dirichlet(num_partitions: int, batch_size: int, val_
 def apply_gaussian_noise(tensor, std_dev):
     noise = torch.randn_like(tensor) * std_dev
     return tensor + noise
-def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_ratio: float = 0.1, sigma: float = 0.05):
+
+# Hàm đảo ngược chuẩn hóa
+def unnormalize_image(image_tensor, mean, std):
+    # Đảo ngược Normalize: (image * std) + mean
+    for t, m, s in zip(image_tensor, mean, std):
+        t.mul_(s).add_(m)  # Thực hiện từng kênh
+    return image_tensor
+
+# Hàm hiển thị ảnh từ một tensor
+def display_image(image_tensor, mean, std):
+    # Đảo ngược chuẩn hóa
+    image_tensor = unnormalize_image(image_tensor, mean, std)
+    # Chuyển tensor thành NumPy array và điều chỉnh thứ tự kênh màu (CHW -> HWC)
+    image_numpy = image_tensor.permute(1, 2, 0).numpy()
+    # Cắt giá trị ảnh về phạm vi [0, 1] để hiển thị đúng
+    image_numpy = image_numpy.clip(0, 1)
+    # Trả về ảnh NumPy
+    return image_numpy
+
+def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_ratio: float = 0.1, sigma: float = 0.05, seed: int = 42):
     """
     Chia du lieu ngau nhien va deu cho cac ben, sau do them noise vao cac ben
     moi ben i co noise khac nhau Gauss(0, sigma*i/N)
@@ -352,7 +374,7 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
     trainset, testset = get_custom_dataset()
     num_train = int((1 - val_ratio) * len(trainset))
     num_val = len(trainset) - num_train
-    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(2023))
+    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(seed))
 
     indices = trainset.indices
 
@@ -370,14 +392,14 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
         noisy_dataset = [(noisy_samples[j], trainset.dataset[part_indices[j]][1]) for j in range(len(part_indices))]
         # train_partitions.append((noisy_samples, [sample[1] for sample in partition_set]))
         train_partitions.append(noisy_dataset)
-    trainloaders = [DataLoader(train_partitions[i], batch_size=batch_size, shuffle=True, num_workers=6) for i in range(num_partitions)]
+    trainloaders = [DataLoader(train_partitions[i], batch_size=batch_size, shuffle=True, num_workers=4) for i in range(num_partitions)]
     partition_len_val = [len(valset) // num_partitions] * num_partitions
     for i in range(len(valset) % num_partitions):
         partition_len_val[i] += 1
     
-    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(seed))
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
 ####
     class_distributions = []
@@ -408,26 +430,67 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
     plt.savefig(os.path.join(output_dir, 'data_partition.png'))
     plt.close()
 
+    #Lưu ảnh nhiễu vào running_outputs
+    # Mean và std từ Normalize
+    mean = [0.485, 0.456, 0.406]
+    std = [0.229, 0.224, 0.225]
+
+    # Tạo thư mục lưu ảnh nếu chưa tồn tại
+    output_dir = "running_outputs"
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Khởi tạo một lưới 10x6 để hiển thị ảnh
+    fig, axes = plt.subplots(10, 6, figsize=(15, 25))
+
+    # Duyệt qua 60 trainloaders và hiển thị ảnh đầu tiên
+    for i, trainloader in enumerate(trainloaders[:num_partitions]):
+        # Lấy ảnh đầu tiên từ trainloader
+        image_tensor = trainloader.dataset[0][0].clone()  # Clone để tránh thay đổi dữ liệu gốc
+        
+        # Tìm vị trí hàng, cột trong lưới
+        row, col = divmod(i, 6)
+        plt.sca(axes[row, col])  # Đặt trục hiện tại là vị trí hàng, cột trong lưới
+        
+        # Hiển thị ảnh
+        image_numpy = display_image(image_tensor, mean, std)
+        axes[row, col].imshow(image_numpy)
+        axes[row, col].axis('off')
+    plt.title(f"Noise image with sigma from {sigma * 1 / num_partitions} to {sigma}")
+    # Điều chỉnh layout để không bị chồng lấn
+    plt.tight_layout()
+
+    # Lưu ảnh thay vì hiển thị
+    output_path = os.path.join(output_dir, "image_noise.png")
+    plt.savefig(output_path, dpi=300)  # Lưu ảnh với chất lượng cao
+
+    plt.close()  # Đóng figure
+
+    print(f"Ảnh đã được lưu tại {output_path}")
+
     print(f'Number of train samples: {len(trainset)}, val samples: {len(valset)}, test samples: {len(testloader.dataset)}')
 
 ###
     return trainloaders, valloaders, testloader
 
 
-def prepare_quantity_skew_dirichlet(num_partitions: int, batch_size: int, val_ratio: float = 0.1, beta: float = 10):
+def prepare_quantity_skew_dirichlet(num_partitions: int, batch_size: int, val_ratio: float = 0.1, beta: float = 10, seed: int = 42):
     trainset, testset = get_custom_dataset()
     num_train = int((1 - val_ratio) * len(trainset))
     num_val = len(trainset) - num_train
-    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(2023))
+    trainset, valset = random_split(trainset, [num_train, num_val], generator=torch.Generator().manual_seed(seed))
 
     all_indices = trainset.indices
 
-    proportions = np.random.dirichlet(np.repeat(beta, num_partitions))
-    proportions = (np.cumsum(proportions) * len(all_indices)).astype(int)[:-1]
+    min_size = 0
+    while min_size < 1:
+        proportions = np.random.dirichlet(np.repeat(beta, num_partitions))
+        proportions = (np.cumsum(proportions) * len(all_indices)).astype(int)[:-1]
 
-    partition_indices = np.split(all_indices, proportions)
+        partition_indices = np.split(all_indices, proportions)
 
-    print('Partition sizes:', [len(partition) for partition in partition_indices])
+        min_size = min([len(partition) for partition in partition_indices])
+        print('Partition sizes:', [len(partition) for partition in partition_indices])
+        print('Min partition size:', min_size)
 
     trainsets = [Subset(trainset.dataset, indices) for indices in partition_indices]
 
@@ -435,11 +498,11 @@ def prepare_quantity_skew_dirichlet(num_partitions: int, batch_size: int, val_ra
     for i in range(len(valset) % num_partitions):
         partition_len_val[i] += 1
     
-    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(2023))
+    valsets = random_split(valset, partition_len_val, generator=torch.Generator().manual_seed(seed))
 
-    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=6) for ts in trainsets]
-    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=6) for vs in valsets]
-    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=6)
+    trainloaders = [DataLoader(ts, batch_size=batch_size, shuffle=True, num_workers=4) for ts in trainsets]
+    valloaders = [DataLoader(vs, batch_size=batch_size, shuffle=False, num_workers=4) for vs in valsets]
+    testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     class_distributions = []
     for i, trainloader in enumerate(trainloaders):
@@ -514,23 +577,23 @@ def load_datasets(
 
     # partition the data
     if partitioning == "imbalance_label":
-        return prepare_partitioned_dataset(num_clients, batch_size, val_ratio, config.labels_per_client )
+        return prepare_partitioned_dataset(num_clients, batch_size, val_ratio, config.labels_per_client, config.seed)
 
     if partitioning == "imbalance_label_dirichlet":
-        return prepare_imbalance_label_dirichlet(num_clients, batch_size, val_ratio, config.alpha)
+        return prepare_imbalance_label_dirichlet(num_clients, batch_size, val_ratio, config.alpha, config.seed)
 
     if partitioning == "noise_based_imbalance":
-        return prepare_noise_based_imbalance(num_clients, batch_size, val_ratio, config.sigma)
+        return prepare_noise_based_imbalance(num_clients, batch_size, val_ratio, config.sigma, config.seed)
 
     if partitioning == "quantity_skew_dirichlet":
-        return prepare_quantity_skew_dirichlet(num_clients, batch_size, val_ratio, config.alpha)
+        return prepare_quantity_skew_dirichlet(num_clients, batch_size, val_ratio, config.alpha, config.seed)
     
 
 if __name__ == "__main__":
     # prepare_imbalance_label_dirichlet(5, 32, 0.1, 0.5)
     # prepare_partitioned_dataset(5, 32, 0.1, 1)
-    # prepare_noise_based_imbalance(5, 32, 0.1, 0.05)
-    prepare_quantity_skew_dirichlet(5, 32, 0.1, 10)
+    prepare_noise_based_imbalance(5, 10, 0.1, 0.1)
+    # prepare_quantity_skew_dirichlet(5, 32, 0.1, 10)
 
 
 
@@ -559,7 +622,7 @@ if __name__ == "__main__":
 #     Parameters
 #     ----------
 #     config: DictConfig
-#         Parameterises the dataset partitioning process
+#         Parameterises the dataset partitioning processa
 #     num_clients : int
 #         The number of clients that hold a part of the data
 #     val_ratio : float, optional

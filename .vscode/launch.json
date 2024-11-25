@@ -32,7 +32,7 @@
                 // "-m",
                 // "niid_bench.main",
                 "--config-name",
-                "fedavg_base"
+                "scaffold_base"
             ]
         }
     ]
