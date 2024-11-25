@@ -194,8 +194,8 @@ def train_scaffold(
     """
     criterion = nn.CrossEntropyLoss()
     optimizer = ScaffoldOptimizer(
-        # net.parameters(), 
-        filter(lambda p: p.requires_grad, net.parameters()),
+        net.parameters(), 
+        # filter(lambda p: p.requires_grad, net.parameters()),
         learning_rate, 
         momentum, 
         weight_decay
