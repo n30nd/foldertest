@@ -1,0 +1,2 @@
+- partitioning=imbalance_label_dirichlet
+- alpha=0.5
