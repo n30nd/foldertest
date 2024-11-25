@@ -455,7 +455,6 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
         image_numpy = display_image(image_tensor, mean, std)
         axes[row, col].imshow(image_numpy)
         axes[row, col].axis('off')
-    plt.title(f"Noise image with sigma from {sigma * 1 / num_partitions} to {sigma}")
     # Điều chỉnh layout để không bị chồng lấn
     plt.tight_layout()
 
