@@ -1,9 +1,0 @@
-[2024-11-18 17:22:55,938][flwr][WARNING] - Both server and strategy were provided, ignoring strategy
-[2024-11-18 17:22:55,939][flwr][INFO] - Starting Flower simulation, config: ServerConfig(num_rounds=2, round_timeout=None)
-[2024-11-18 17:23:02,565][flwr][INFO] - Flower VCE: Ray initialized with resources: {'accelerator_type:G': 1.0, 'GPU': 1.0, 'object_store_memory': 3795636633.0, 'memory': 7591273268.0, 'CPU': 12.0, 'node:__internal_head__': 1.0, 'node:192.168.193.77': 1.0}
-[2024-11-18 17:23:02,566][flwr][INFO] - Flower VCE: Resources for each Virtual Client: {'num_cpus': 6, 'num_gpus': 0.5}
-[2024-11-18 17:23:02,578][flwr][INFO] - Flower VCE: Creating VirtualClientEngineActorPool with 2 actors
-[2024-11-18 17:23:02,579][flwr][INFO] - Initializing global parameters
-[2024-11-18 17:23:02,579][flwr][INFO] - Requesting initial parameters from one random client
-[2024-11-18 17:23:06,578][flwr][INFO] - Received initial parameters from one random client
-[2024-11-18 17:23:06,578][flwr][INFO] - Evaluating initial parameters
