@@ -13,7 +13,7 @@ num_rounds: 2
 partitioning: "imbalance_label"
 dataset_name: "chest_xray"
 dataset_seed: 42
-alpha: 1
+alpha: 0.5
 sigma: 0.1
 labels_per_client: 2 # only used when partitioning is label quantity
 momentum: 0.9
@@ -61,5 +61,5 @@ client:
 server_device: cpu
 
 client_resources:
-  num_cpus: 12
+  num_cpus: 4
   num_gpus: 1

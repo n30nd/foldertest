@@ -123,8 +123,8 @@ class VGG11Model(nn.Module):
         self.model = torchvision.models.vgg11(pretrained=True)
         
         # Freeze the convolutional base
-        for param in self.model.features.parameters():
-            param.requires_grad = False
+        # for param in self.model.features.parameters():
+        #     param.requires_grad = False
         
         # Replace avgpool with AdaptiveAvgPool2d
         self.model.avgpool = nn.AdaptiveAvgPool2d((1, 1))
