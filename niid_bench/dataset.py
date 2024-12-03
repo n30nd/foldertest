@@ -61,17 +61,17 @@ import matplotlib.pyplot as plt
 def get_custom_dataset(data_path: str = "/kaggle/input/chest-xray-pneumonia/chest_xray"):
     """Load custom dataset and apply transformations."""
     train_transform = transforms.Compose([
-        transforms.Resize((150, 150)),  # Kích thước ảnh cho VGG
+        transforms.Resize(256),  # Kích thước ảnh cho VGG
         transforms.RandomAffine(degrees=0, shear=10),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomResizedCrop(150, scale=(0.8, 1.0)),
+        transforms.RandomResizedCrop(224, scale=(0.8, 1.0)),
         transforms.RandomAffine(degrees=0, translate=(0.2, 0)),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406],  # Mean chuẩn của ImageNet
                              [0.229, 0.224, 0.225])  # Std chuẩn của ImageNet
     ])
     test_transform = transforms.Compose([
-        transforms.Resize((150, 150)),  # Kích thước ảnh cho VGG
+        transforms.Resize((224, 224)),  # Kích thước ảnh cho VGG
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406],  # Mean chuẩn của ImageNet
                              [0.229, 0.224, 0.225])  # Std chuẩn của ImageNet
