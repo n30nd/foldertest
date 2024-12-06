@@ -129,18 +129,18 @@ hydra:
   runtime:
     version: 1.3.2
     version_base: '1.3'
-    cwd: /media/namvq/Data/code_flwr/niid_bench_new/niid_bench
+    cwd: /media/namvq/Data/code_datn/v3/niid_bench
     config_sources:
     - path: hydra.conf
       schema: pkg
       provider: hydra
-    - path: /media/namvq/Data/code_flwr/niid_bench_new/niid_bench/niid_bench/conf
+    - path: /media/namvq/Data/code_datn/v3/niid_bench/niid_bench/conf
       schema: file
       provider: main
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /media/namvq/Data/code_flwr/niid_bench_new/niid_bench/outputs/2024-12-03/14-58-26
+    output_dir: /media/namvq/Data/code_datn/v3/niid_bench/outputs/2024-12-06/21-39-17
     choices:
       hydra/env: default
       hydra/callbacks: null

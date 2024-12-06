@@ -1,10 +1,10 @@
-num_clients: 3
-num_epochs: 1
+num_clients: 60
+num_epochs: 5
 batch_size: 10
 clients_per_round: 2
 fraction_fit: 0.1
 learning_rate: 0.001
-num_rounds: 1
+num_rounds: 60
 partitioning: imbalance_label
 dataset_name: chest_xray
 dataset_seed: 42
@@ -24,7 +24,7 @@ dataset:
   name: ${dataset_name}
   partitioning: ${partitioning}
   batch_size: ${batch_size}
-  val_split: 0.1
+  val_split: 0.0
   seed: ${dataset_seed}
   alpha: ${alpha}
   labels_per_client: ${labels_per_client}
@@ -42,5 +42,5 @@ strategy:
 client: null
 server_device: cpu
 client_resources:
-  num_cpus: 4
-  num_gpus: 1
+  num_cpus: 2
+  num_gpus: 0.5

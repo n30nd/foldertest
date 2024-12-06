@@ -58,6 +58,8 @@ import matplotlib.pyplot as plt
 #     trainset = ImageFolder(os.path.join(data_path, 'train'), transform=train_transform)
 #     testset = ImageFolder(os.path.join(data_path, 'test'), transform=test_transform)
 #     return trainset, testset
+
+#/kaggle/input/chest-xray-pneumonia/chest_xray
 def get_custom_dataset(data_path: str = "/kaggle/input/chest-xray-pneumonia/chest_xray"):
     """Load custom dataset and apply transformations."""
     train_transform = transforms.Compose([
