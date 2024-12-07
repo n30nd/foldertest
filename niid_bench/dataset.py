@@ -480,7 +480,7 @@ def prepare_noise_based_imbalance(num_partitions: int, batch_size: int, val_rati
     Mỗi bên i có noise khác nhau Gauss(0, sigma*i/N). Nếu dữ liệu đã tồn tại, tải từ thư mục dataset_noise_{sigma}.
     """
     # noise_dir = f'chest_xray_noise_{sigma}'
-    noise_dir = '/kaggle/input/chest-xray-noise-60-partitions/chest_xray_noise_{sigma}'
+    noise_dir = f'/kaggle/input/chest-xray-noise-60-partitions/chest_xray_noise_{sigma}'
     mean = [0.485, 0.456, 0.406]
     std = [0.229, 0.224, 0.225]
     noisy_transform = transforms.Compose([
