@@ -118,12 +118,16 @@ def main(cfg: DictConfig) -> None:
     plt.legend()
     plt.xticks(ticks=range(1, max(rounds_centralized) + 1))
 
-    # Lưu biểu đồ vào thư mục running_outputs
-    plt.savefig(os.path.join(output_dir, 'accuracy_comparison.png'))
-    plt.close()
-
     save_path = HydraConfig.get().runtime.output_dir
     print(save_path)
+
+    # Lưu biểu đồ vào thư mục running_outputs
+    plt.savefig(os.path.join(output_dir, 'accuracy_comparison.png'))
+    # Lưu biểu đồ vào save_path
+    plt.savefig(os.path.join(save_path, 'accuracy_comparison.png'))
+    plt.close()
+
+
 
     # 7. Save your results
     with open(os.path.join(save_path, "history.pkl"), "wb") as f_ptr:
